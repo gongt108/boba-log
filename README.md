@@ -16,4 +16,8 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     npx expo start
    ```
 
-# boba-log
+# Technologies
+
+1. Expo
+
+2. NativeWind to style components
