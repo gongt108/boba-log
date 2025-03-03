@@ -27,10 +27,23 @@
 			[
 				"expo-splash-screen",
 				{
-					"image": "./assets/images/splash-icon.png",
-					"imageWidth": 200,
-					"resizeMode": "contain",
-					"backgroundColor": "#ffffff"
+					"image": "./assets/images/boba-background.png",
+					"resizeMode": "cover",
+					"backgroundColor": "#ffffff",
+					"enableFullScreenImage_legacy": true
+				}
+			],
+			[
+				"expo-font",
+				{
+					"fonts": [
+						"./assets/fonts/SourGummy-Bold.ttf",
+						"./assets/fonts/SourGummy-ExtraBold.ttf",
+						"./assets/fonts/SourGummy-Light.ttf",
+						"./assets/fonts/SourGummy-Medium.ttf",
+						"./assets/fonts/SourGummy-Regular.ttf",
+						"./assets/fonts/SourGummy-SemiBold.ttf"
+					]
 				}
 			]
 		],
