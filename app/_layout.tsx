@@ -14,7 +14,5 @@ export default function RootLayout() {
 		'SourGummy-SemiBold': require('../assets/fonts/SourGummy-SemiBold.ttf'),
 	});
 
-	if (!fontsLoaded) return null;
-
 	return <Stack screenOptions={{ headerShown: false }} />;
 }

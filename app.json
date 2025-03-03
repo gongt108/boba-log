@@ -19,8 +19,7 @@
 		},
 		"web": {
 			"bundler": "metro",
-			"output": "static",
-			"favicon": "./assets/images/favicon.png"
+			"output": "static"
 		},
 		"plugins": [
 			"expo-router",
@@ -28,7 +27,7 @@
 				"expo-splash-screen",
 				{
 					"image": "./assets/images/boba-background.png",
-					"resizeMode": "cover",
+
 					"backgroundColor": "#ffffff",
 					"enableFullScreenImage_legacy": true
 				}
