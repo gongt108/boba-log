@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import {
+	Text,
+	View,
+	TouchableHighlight,
+	TouchableOpacity,
+	Image,
+} from 'react-native';
 import { Button, Searchbar } from 'react-native-paper';
 
 import images from '@/constants/images';
+import { StoreCard } from '@/components/StoreCard';
 
 export default function Index() {
 	const [searchQuery, setSearchQuery] = useState('');
@@ -16,7 +23,7 @@ export default function Index() {
 			/>
 
 			<View className="mt-8">
-				<View className="flex border-b border-slate-300 border-spacing-4">
+				<View className="flex border-b border-gray-400 border-spacing-4">
 					<View className="flex flex-row justify-between">
 						<Text className="text-lg">Favorites</Text>
 						<Text className="text-md text-blue-500 underline underline-offset-2">
@@ -34,8 +41,13 @@ export default function Index() {
 							See All
 						</Text>
 					</View>
-					<TouchableOpacity className="flex h-48">
-						<View className="flex flex-row my-4">
+					<TouchableHighlight
+						activeOpacity={0.6}
+						underlayColor="#DDDDDD"
+						className="flex border-b border-slate-300"
+						onPress={() => alert('Pressed!')}
+					>
+						<View className="flex flex-row my-4 items-center ">
 							<Image
 								source={images.heyteaLogo}
 								resizeMode="contain"
@@ -46,9 +58,13 @@ export default function Index() {
 									borderRadius: 32, // Half of the width/height for circular image
 								}}
 							/>
-							<Text>HeyTea</Text>
+							<View className="flex flex-col">
+								<Text className="ms-4 text-lg">HeyTea</Text>
+								<Text className="ms-4 text-gray-600">Sunnyvale, CA</Text>
+							</View>
 						</View>
-					</TouchableOpacity>
+					</TouchableHighlight>
+					<StoreCard />
 				</View>
 			</View>
 		</View>
