@@ -1,14 +1,17 @@
 import { Image, Text, TouchableHighlight, View } from 'react-native';
+import { router } from 'expo-router';
 
 import images from '@/constants/images';
 
 export const StoreCard = () => {
+	const handleCardPress = () => router.push(`/store`);
+
 	return (
 		<TouchableHighlight
 			activeOpacity={0.6}
 			underlayColor="#DDDDDD"
 			className="flex border-b border-slate-300"
-			onPress={() => alert('Pressed!')}
+			onPress={() => handleCardPress()}
 		>
 			<View className="flex flex-row my-4 items-center ">
 				<Image
