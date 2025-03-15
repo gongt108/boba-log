@@ -10,7 +10,7 @@ import { Button, Searchbar } from 'react-native-paper';
 import { router } from 'expo-router';
 
 import images from '@/constants/images';
-import { StoreCard } from '@/components/StoreCard';
+import DrinkCard from '@/components/DrinkCard';
 
 export default function Store() {
 	const [searchQuery, setSearchQuery] = useState('');
@@ -50,7 +50,7 @@ export default function Store() {
 					>
 						<View className="flex flex-row my-4 items-center ">
 							<Image
-								source={images.heyteaLogo}
+								source={images.heyteaJasmineLatte}
 								resizeMode="contain"
 								className="w-[64px] h-[64px] rounded-full"
 								style={{
@@ -59,13 +59,15 @@ export default function Store() {
 									borderRadius: 32, // Half of the width/height for circular image
 								}}
 							/>
-							<View className="flex flex-col">
-								<Text className="ms-4 text-lg">HeyTea</Text>
-								<Text className="ms-4 text-gray-600">Sunnyvale, CA</Text>
-							</View>
+							<Text className="ms-4 text-lg">Jasmine Latte</Text>
 						</View>
 					</TouchableHighlight>
-					<StoreCard />
+					<DrinkCard
+						drink={{
+							name: 'Moyun Coconut Blue',
+							img: images.heyteaMoyunCoconutBlue,
+						}}
+					/>
 				</View>
 			</View>
 		</View>
