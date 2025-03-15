@@ -1,20 +1,31 @@
-import { Image, Text, TouchableHighlight, View } from 'react-native';
+import {
+	Image,
+	ImageSourcePropType,
+	Text,
+	TouchableHighlight,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import { router } from 'expo-router';
 
 import images from '@/constants/images';
 
-// type DrinkProps = {
-// 	name: string;
-// 	img: string;
-// };
+interface Drink {
+	img: ImageSourcePropType;
+	name: string;
+}
 
-const DrinkCard = ({ drink }) => {
+interface DrinkProps {
+	drink: Drink;
+}
+
+const DrinkCard = ({ drink }: DrinkProps) => {
 	const handleCardPress = () => router.push(`/store`);
 
 	return (
-		<TouchableHighlight
+		<TouchableOpacity
 			activeOpacity={0.6}
-			underlayColor="#DDDDDD"
+			// underlayColor="#DDDDDD"
 			className="flex border-b border-slate-300"
 			onPress={() => handleCardPress()}
 		>
@@ -31,7 +42,7 @@ const DrinkCard = ({ drink }) => {
 				/>
 				<Text className="ms-4 text-lg">{drink.name}</Text>
 			</View>
-		</TouchableHighlight>
+		</TouchableOpacity>
 	);
 };
 

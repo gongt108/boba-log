@@ -40,7 +40,7 @@ export default function Store() {
 				</View>
 				<View className="flex">
 					<View className="flex flex-row justify-between mt-4">
-						<Text className="text-lg">Past Stores</Text>
+						<Text className="text-lg">Drinks</Text>
 					</View>
 					<TouchableHighlight
 						activeOpacity={0.6}
