@@ -20,7 +20,7 @@ interface DrinkProps {
 }
 
 const DrinkCard = ({ drink }: DrinkProps) => {
-	const handleCardPress = () => router.push(`/store`);
+	const handleCardPress = () => router.push(`/order`);
 
 	return (
 		<TouchableOpacity
