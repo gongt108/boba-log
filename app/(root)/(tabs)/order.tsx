@@ -1,4 +1,4 @@
-import { Image, Input, View, Text } from 'react-native';
+import { Image, Input, View, Text, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { RadioButton } from 'react-native-paper';
 
@@ -27,11 +27,17 @@ export default function Order() {
 				<View className="border-t border-slate-300 px-8 pt-4">
 					<Text className="font-semibold text-xl">Size</Text>
 					<Text className="text-lg mb-2">Choose 1</Text>
-					<RadioButton
-						value="default"
-						status={size === 'default' ? 'checked' : 'unchecked'}
+					<TouchableOpacity
+						className="flex flex-row"
 						onPress={() => setSize('default')}
-					/>
+					>
+						<RadioButton
+							value="default"
+							status={size === 'default' ? 'checked' : 'unchecked'}
+							onPress={() => setSize('default')}
+						/>
+						<Text className="items-center flex text-lg">Default</Text>
+					</TouchableOpacity>
 				</View>
 				<RadioButton
 					value="default"
