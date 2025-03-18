@@ -72,6 +72,11 @@ export default function Order() {
 		setToppings(toppingsList);
 	};
 
+	const setOther = () => {
+		setChecked(!checked);
+		changeToppings('other');
+	};
+
 	console.log(toppings);
 
 	return (
@@ -143,12 +148,13 @@ export default function Order() {
 					</TouchableHighlight>
 				</View>
 				{/* Sugar Level */}
-				<View className="border-t border-slate-300 px-8 py-4 mb-4 w-full flex-1">
+				<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
 					<Text className="font-semibold text-xl">Sugar</Text>
 					<Text className="text-lg mb-2">Choose 1</Text>
 					<View className="w-full flex-row flex-wrap justify-between">
 						{sweetLevels.map(({ label, value }) => (
 							<TouchableHighlight
+								key={value}
 								activeOpacity={0.6}
 								underlayColor="#DDDDDD"
 								className="flex flex-row rounded-2xl w-1/2"
@@ -170,12 +176,13 @@ export default function Order() {
 					</View>
 				</View>
 				{/* Ice Level */}
-				<View className="border-t border-slate-300 px-8 py-4 w-full flex-1">
+				<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
 					<Text className="font-semibold text-xl">Iced/Hot</Text>
 					<Text className="text-lg mb-2">Choose 1</Text>
 					<View className="w-full flex-row flex-wrap justify-between">
 						{iceLevels.map(({ label, value }) => (
 							<TouchableHighlight
+								key={value}
 								activeOpacity={0.6}
 								underlayColor="#DDDDDD"
 								className="flex flex-row rounded-2xl w-1/2"
@@ -197,12 +204,13 @@ export default function Order() {
 					</View>
 				</View>
 				{/* Milk Choices */}
-				<View className="border-t border-slate-300 px-8 py-4 w-full flex-1">
+				<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
 					<Text className="font-semibold text-xl">Milk</Text>
 					<Text className="text-lg mb-2">Choose 1</Text>
 					<View className="w-full flex-row flex-wrap justify-between">
 						{milkChoices.map(({ label, value }) => (
 							<TouchableHighlight
+								key={value}
 								activeOpacity={0.6}
 								underlayColor="#DDDDDD"
 								className="flex flex-row rounded-2xl w-1/2"
@@ -225,11 +233,12 @@ export default function Order() {
 				</View>
 
 				{/* Toppings */}
-				<View className="border-t border-slate-300 px-8 py-4 w-full flex-1">
+				<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
 					<Text className="font-semibold text-xl">Toppings</Text>
 					<View className="w-full flex-row flex-wrap justify-between mt-2">
 						{toppingOptions.map(({ label, value }) => (
 							<TouchableHighlight
+								key={value}
 								activeOpacity={0.6}
 								underlayColor="#DDDDDD"
 								className="flex flex-row rounded-2xl w-1/2 max-w-1/2 overflow-hidden"
@@ -247,11 +256,10 @@ export default function Order() {
 								</View>
 							</TouchableHighlight>
 						))}
-						<TouchableHighlight
+						<TouchableOpacity
 							activeOpacity={0.6}
 							underlayColor="#DDDDDD"
 							className="flex flex-row rounded-2xl overflow-hidden"
-							onPress={() => setMilkChoice('other')}
 						>
 							<View
 								className="flex flex-row
@@ -260,10 +268,15 @@ export default function Order() {
 								<Checkbox
 									status={checked ? 'checked' : 'unchecked'}
 									onPress={() => {
-										setChecked(!checked);
+										setOther();
 									}}
 								/>
-								<Text className="items-center flex text-lg ">Other</Text>
+								<Text
+									className="items-center flex text-lg"
+									onPress={() => setOther()}
+								>
+									Other
+								</Text>
 								{checked && (
 									<TextInput
 										className="ms-4 outline-none underline"
@@ -272,14 +285,29 @@ export default function Order() {
 									/>
 								)}
 							</View>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 				</View>
-				<TouchableOpacity className="mx-auto py-2 px-4 mt-12 mb-8 font-bold border rounded-2xl bg-gray-200">
-					Save Order
+				{/* Other Information */}
+				<View className="border-t border-slate-300 px-8 py-4  w-full flex-grow">
+					<Text className="font-semibold text-xl">Other Information</Text>
+					<View className="w-full border border-slate-300 rounded-lg h-24 mt-2">
+						<TextInput
+							className="p-4 outline-teal-700"
+							placeholder="Modifications, corrections, etc..."
+							placeholderTextColor="#949494"
+							numberOfLines={4}
+							multiline={true}
+						/>
+					</View>
+				</View>
+				<TouchableOpacity className="mx-auto py-2 px-4 mb-12 mt-8 border rounded-2xl bg-gray-200">
+					<Text className="font-bold text-xl">Save Order</Text>
 				</TouchableOpacity>
 			</View>
-			<TouchableOpacity className="absolute">Back</TouchableOpacity>
+			<TouchableOpacity className="absolute">
+				<Text>Back</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }
