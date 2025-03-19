@@ -19,6 +19,7 @@ export default function Order() {
 	const [toppings, setToppings] = useState(['honey-boba', 'grass-jelly']);
 	const [otherChecked, setOtherChecked] = useState(false);
 	const [otherToppings, setOtherToppings] = useState('');
+	const [otherInfo, setOtherInfo] = useState('');
 
 	const sweetLevels = [
 		{ label: 'Not Sweet', value: 'none' },
@@ -85,9 +86,8 @@ export default function Order() {
 			iceLevel: iceLevel,
 			milkChoice: milkChoice,
 			toppings: toppings,
+			otherInfo: otherInfo,
 		};
-
-		console.log(toppings);
 
 		for (let i = 0; i < toppings.length; i++) {
 			if (toppings[i] == 'other') {
@@ -332,6 +332,7 @@ export default function Order() {
 							placeholderTextColor="#949494"
 							numberOfLines={4}
 							multiline={true}
+							onChangeText={setOtherInfo}
 						/>
 					</View>
 				</View>
