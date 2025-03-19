@@ -17,7 +17,8 @@ export default function Order() {
 	const [iceLevel, setIceLevel] = useState('default');
 	const [milkChoice, setMilkChoice] = useState('default');
 	const [toppings, setToppings] = useState(['honey-boba', 'grass-jelly']);
-	const [checked, setChecked] = React.useState(false);
+	const [otherChecked, setOtherChecked] = useState(false);
+	const [otherToppings, setOtherToppings] = useState('');
 
 	const sweetLevels = [
 		{ label: 'Not Sweet', value: 'none' },
@@ -73,14 +74,47 @@ export default function Order() {
 	};
 
 	const setOther = () => {
-		setChecked(!checked);
+		setOtherChecked(!otherChecked);
 		changeToppings('other');
+	};
+
+	const saveOrder = () => {
+		const customizations = {
+			size: size,
+			sweetLevel: sweetLevel,
+			iceLevel: iceLevel,
+			milkChoice: milkChoice,
+			toppings: toppings,
+		};
+
+		console.log(toppings);
+
+		for (let i = 0; i < toppings.length; i++) {
+			if (toppings[i] == 'other') {
+				break;
+			}
+			console.log(toppings[i]);
+			const name = toppingOptions.find(
+				(topping) => topping.value == toppings[i]
+			);
+			customizations['toppings'][i] = name.label;
+		}
+
+		if (otherChecked && otherToppings) {
+			customizations['toppings'].pop();
+			customizations['toppings'].push(otherToppings);
+			console.log(otherToppings);
+		} else if (otherChecked && !otherToppings) {
+			customizations['toppings'].pop();
+		}
+
+		console.log(customizations);
 	};
 
 	console.log(toppings);
 
 	return (
-		<View className="flex-1 overflow-scroll">
+		<View className="flex-1 overflow-scroll relative">
 			<View className="mx-auto mt-8">
 				<Image
 					source={images.heyteaMoyunCoconutBlue}
@@ -258,7 +292,6 @@ export default function Order() {
 						))}
 						<TouchableOpacity
 							activeOpacity={0.6}
-							underlayColor="#DDDDDD"
 							className="flex flex-row rounded-2xl overflow-hidden"
 						>
 							<View
@@ -266,7 +299,7 @@ export default function Order() {
                                                 "
 							>
 								<Checkbox
-									status={checked ? 'checked' : 'unchecked'}
+									status={otherChecked ? 'checked' : 'unchecked'}
 									onPress={() => {
 										setOther();
 									}}
@@ -277,11 +310,12 @@ export default function Order() {
 								>
 									Other
 								</Text>
-								{checked && (
+								{otherChecked && (
 									<TextInput
 										className="ms-4 outline-none underline"
 										placeholder="Input toppings here..."
 										placeholderTextColor="#949494"
+										onChangeText={setOtherToppings}
 									/>
 								)}
 							</View>
@@ -301,7 +335,10 @@ export default function Order() {
 						/>
 					</View>
 				</View>
-				<TouchableOpacity className="mx-auto py-2 px-4 mb-12 mt-8 border rounded-2xl bg-gray-200">
+				<TouchableOpacity
+					onPress={() => saveOrder()}
+					className="mx-auto py-2 px-4 mb-12 mt-8 border rounded-2xl bg-gray-200"
+				>
 					<Text className="font-bold text-xl">Save Order</Text>
 				</TouchableOpacity>
 			</View>
