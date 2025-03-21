@@ -114,7 +114,7 @@ export default function Order() {
 	console.log(toppings);
 
 	return (
-		<View className="flex-1 overflow-scroll relative">
+		<View className="overflow-scroll relative">
 			<View className="mx-auto mt-8">
 				<Image
 					source={images.heyteaMoyunCoconutBlue}
