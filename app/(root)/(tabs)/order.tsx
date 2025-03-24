@@ -1,6 +1,7 @@
 import {
 	Image,
 	View,
+	ScrollView,
 	Text,
 	TextInput,
 	TouchableHighlight,
@@ -12,6 +13,8 @@ import { Checkbox, RadioButton } from 'react-native-paper';
 import images from '@/constants/images';
 
 export default function Order() {
+	const [isOrdering, setIsOrdering] = useState(false);
+
 	const [size, setSize] = useState('regular');
 	const [sweetLevel, setSweetLevel] = useState('default');
 	const [iceLevel, setIceLevel] = useState('default');
@@ -107,14 +110,10 @@ export default function Order() {
 		} else if (otherChecked && !otherToppings) {
 			customizations['toppings'].pop();
 		}
-
-		console.log(customizations);
 	};
 
-	console.log(toppings);
-
 	return (
-		<View className="overflow-scroll relative">
+		<View className="relative flex-1">
 			<View className="mx-auto mt-8">
 				<Image
 					source={images.heyteaMoyunCoconutBlue}
@@ -125,227 +124,250 @@ export default function Order() {
 				</Text>
 				<Text className="text-center text-lg">HeyTea</Text>
 			</View>
-			<View className="mt-4 ">
-				<View className="border-t border-slate-300 px-8 pt-4 mb-4">
-					<Text className="font-semibold text-xl">Size</Text>
-					<Text className="text-lg mb-2">Choose 1</Text>
-					<TouchableHighlight
-						underlayColor="#DDDDDD"
-						className="flex flex-row rounded-2xl"
-						onPress={() => setSize('regular')}
-					>
-						<View
-							className="flex flex-row
-                        "
-						>
-							<RadioButton
-								value="regular"
-								status={size === 'regular' ? 'checked' : 'unchecked'}
-								onPress={() => setSize('regular')}
-							/>
-							<Text className="items-center flex text-lg">Regular</Text>
-						</View>
-					</TouchableHighlight>
-					<TouchableHighlight
-						className="flex flex-row rounded-2xl"
-						underlayColor="#DDDDDD"
-						onPress={() => setSize('large')}
-					>
-						<View
-							className="flex flex-row
-                        "
-						>
-							<RadioButton
-								value="large"
-								status={size === 'large' ? 'checked' : 'unchecked'}
-								onPress={() => setSize('large')}
-							/>
-							<Text className="items-center flex text-lg">Large</Text>
-						</View>
-					</TouchableHighlight>
-					<TouchableHighlight
-						className="flex flex-row rounded-2xl"
-						underlayColor="#DDDDDD"
-						onPress={() => setSize('other')}
-					>
-						<View
-							className="flex flex-row
-                        "
-						>
-							<RadioButton
-								value="other"
-								status={size === 'other' ? 'checked' : 'unchecked'}
-								onPress={() => setSize('other')}
-							/>
-							<Text className="items-center flex text-lg">Other</Text>
-						</View>
-					</TouchableHighlight>
-				</View>
-				{/* Sugar Level */}
-				<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
-					<Text className="font-semibold text-xl">Sugar</Text>
-					<Text className="text-lg mb-2">Choose 1</Text>
-					<View className="w-full flex-row flex-wrap justify-between">
-						{sweetLevels.map(({ label, value }) => (
-							<TouchableHighlight
-								key={value}
-								activeOpacity={0.6}
-								underlayColor="#DDDDDD"
-								className="flex flex-row rounded-2xl w-1/2"
-								onPress={() => setSweetLevel(value)}
-							>
-								<View
-									className="flex flex-row
-                                                "
-								>
-									<RadioButton
-										value={value}
-										status={sweetLevel === value ? 'checked' : 'unchecked'}
-										onPress={() => setSweetLevel(value)}
-									/>
-									<Text className="items-center flex text-lg">{label}</Text>
-								</View>
-							</TouchableHighlight>
-						))}
-					</View>
-				</View>
-				{/* Ice Level */}
-				<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
-					<Text className="font-semibold text-xl">Iced/Hot</Text>
-					<Text className="text-lg mb-2">Choose 1</Text>
-					<View className="w-full flex-row flex-wrap justify-between">
-						{iceLevels.map(({ label, value }) => (
-							<TouchableHighlight
-								key={value}
-								activeOpacity={0.6}
-								underlayColor="#DDDDDD"
-								className="flex flex-row rounded-2xl w-1/2"
-								onPress={() => setIceLevel(value)}
-							>
-								<View
-									className="flex flex-row
-                                                "
-								>
-									<RadioButton
-										value={value}
-										status={iceLevel === value ? 'checked' : 'unchecked'}
-										onPress={() => setIceLevel(value)}
-									/>
-									<Text className="items-center flex text-lg">{label}</Text>
-								</View>
-							</TouchableHighlight>
-						))}
-					</View>
-				</View>
-				{/* Milk Choices */}
-				<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
-					<Text className="font-semibold text-xl">Milk</Text>
-					<Text className="text-lg mb-2">Choose 1</Text>
-					<View className="w-full flex-row flex-wrap justify-between">
-						{milkChoices.map(({ label, value }) => (
-							<TouchableHighlight
-								key={value}
-								activeOpacity={0.6}
-								underlayColor="#DDDDDD"
-								className="flex flex-row rounded-2xl w-1/2"
-								onPress={() => setMilkChoice(value)}
-							>
-								<View
-									className="flex flex-row
-                                                "
-								>
-									<RadioButton
-										value={value}
-										status={milkChoice === value ? 'checked' : 'unchecked'}
-										onPress={() => setMilkChoice(value)}
-									/>
-									<Text className="items-center flex text-lg">{label}</Text>
-								</View>
-							</TouchableHighlight>
-						))}
-					</View>
-				</View>
-
-				{/* Toppings */}
-				<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
-					<Text className="font-semibold text-xl">Toppings</Text>
-					<View className="w-full flex-row flex-wrap justify-between mt-2">
-						{toppingOptions.map(({ label, value }) => (
-							<TouchableHighlight
-								key={value}
-								activeOpacity={0.6}
-								underlayColor="#DDDDDD"
-								className="flex flex-row rounded-2xl w-1/2 max-w-1/2 overflow-hidden"
-								onPress={() => changeToppings(value)}
-							>
-								<View
-									className="flex flex-row overflow-hidden
-                                                "
-								>
-									<Checkbox
-										status={toppings.includes(value) ? 'checked' : 'unchecked'}
-										onPress={() => changeToppings(value)}
-									/>
-									<Text className="items-center flex text-lg ">{label}</Text>
-								</View>
-							</TouchableHighlight>
-						))}
-						<TouchableOpacity
-							activeOpacity={0.6}
-							className="flex flex-row rounded-2xl overflow-hidden"
-						>
-							<View
-								className="flex flex-row
-                                                "
-							>
-								<Checkbox
-									status={otherChecked ? 'checked' : 'unchecked'}
-									onPress={() => {
-										setOther();
-									}}
-								/>
-								<Text
-									className="items-center flex text-lg"
-									onPress={() => setOther()}
-								>
-									Other
+			<View className="mt-4 border-y border-slate-300">
+				<TouchableOpacity onPress={() => setIsOrdering(!isOrdering)}>
+					<View className="my-4 ">
+						{isOrdering ? (
+							<View className="flex flex-row justify-end me-4">
+								<Text className="text-lg">To see past orders, </Text>
+								<Text className="text-blue-600 flex text-lg">
+									Hide Order Form
 								</Text>
-								{otherChecked && (
-									<TextInput
-										className="ms-4 outline-none underline"
-										placeholder="Input toppings here..."
-										placeholderTextColor="#949494"
-										onChangeText={setOtherToppings}
-									/>
-								)}
 							</View>
-						</TouchableOpacity>
+						) : (
+							<Text className="text-blue-600 flex justify-end me-4 text-lg">
+								Show Order Form
+							</Text>
+						)}
 					</View>
-				</View>
-				{/* Other Information */}
-				<View className="border-t border-slate-300 px-8 py-4  w-full flex-grow">
-					<Text className="font-semibold text-xl">Other Information</Text>
-					<View className="w-full border border-slate-300 rounded-lg h-24 mt-2">
-						<TextInput
-							className="p-4 outline-teal-700"
-							placeholder="Modifications, corrections, etc..."
-							placeholderTextColor="#949494"
-							numberOfLines={4}
-							multiline={true}
-							onChangeText={setOtherInfo}
-						/>
-					</View>
-				</View>
-				<TouchableOpacity
-					onPress={() => saveOrder()}
-					className="mx-auto py-2 px-4 mb-12 mt-8 border rounded-2xl bg-gray-200"
-				>
-					<Text className="font-bold text-xl">Save Order</Text>
 				</TouchableOpacity>
 			</View>
-			<TouchableOpacity className="absolute">
-				<Text>Back</Text>
-			</TouchableOpacity>
+
+			{isOrdering && (
+				<ScrollView>
+					<View className="mt-4">
+						<View className=" px-8 pt-4 mb-4">
+							<Text className="font-semibold text-xl">Size</Text>
+							<Text className="text-lg mb-2">Choose 1</Text>
+							<TouchableHighlight
+								underlayColor="#DDDDDD"
+								className="flex flex-row rounded-2xl"
+								onPress={() => setSize('regular')}
+							>
+								<View
+									className="flex flex-row
+											"
+								>
+									<RadioButton
+										value="regular"
+										status={size === 'regular' ? 'checked' : 'unchecked'}
+										onPress={() => setSize('regular')}
+									/>
+									<Text className="items-center flex text-lg">Regular</Text>
+								</View>
+							</TouchableHighlight>
+							<TouchableHighlight
+								className="flex flex-row rounded-2xl"
+								underlayColor="#DDDDDD"
+								onPress={() => setSize('large')}
+							>
+								<View
+									className="flex flex-row
+											"
+								>
+									<RadioButton
+										value="large"
+										status={size === 'large' ? 'checked' : 'unchecked'}
+										onPress={() => setSize('large')}
+									/>
+									<Text className="items-center flex text-lg">Large</Text>
+								</View>
+							</TouchableHighlight>
+							<TouchableHighlight
+								className="flex flex-row rounded-2xl"
+								underlayColor="#DDDDDD"
+								onPress={() => setSize('other')}
+							>
+								<View
+									className="flex flex-row
+											"
+								>
+									<RadioButton
+										value="other"
+										status={size === 'other' ? 'checked' : 'unchecked'}
+										onPress={() => setSize('other')}
+									/>
+									<Text className="items-center flex text-lg">Other</Text>
+								</View>
+							</TouchableHighlight>
+						</View>
+						{/* Sugar Level */}
+						<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
+							<Text className="font-semibold text-xl">Sugar</Text>
+							<Text className="text-lg mb-2">Choose 1</Text>
+							<View className="w-full flex-row flex-wrap justify-between">
+								{sweetLevels.map(({ label, value }) => (
+									<TouchableHighlight
+										key={value}
+										activeOpacity={0.6}
+										underlayColor="#DDDDDD"
+										className="flex flex-row rounded-2xl w-1/2"
+										onPress={() => setSweetLevel(value)}
+									>
+										<View
+											className="flex flex-row
+																	"
+										>
+											<RadioButton
+												value={value}
+												status={sweetLevel === value ? 'checked' : 'unchecked'}
+												onPress={() => setSweetLevel(value)}
+											/>
+											<Text className="items-center flex text-lg">{label}</Text>
+										</View>
+									</TouchableHighlight>
+								))}
+							</View>
+						</View>
+						{/* Ice Level */}
+						<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
+							<Text className="font-semibold text-xl">Iced/Hot</Text>
+							<Text className="text-lg mb-2">Choose 1</Text>
+							<View className="w-full flex-row flex-wrap justify-between">
+								{iceLevels.map(({ label, value }) => (
+									<TouchableHighlight
+										key={value}
+										activeOpacity={0.6}
+										underlayColor="#DDDDDD"
+										className="flex flex-row rounded-2xl w-1/2"
+										onPress={() => setIceLevel(value)}
+									>
+										<View
+											className="flex flex-row
+																	"
+										>
+											<RadioButton
+												value={value}
+												status={iceLevel === value ? 'checked' : 'unchecked'}
+												onPress={() => setIceLevel(value)}
+											/>
+											<Text className="items-center flex text-lg">{label}</Text>
+										</View>
+									</TouchableHighlight>
+								))}
+							</View>
+						</View>
+						{/* Milk Choices */}
+						<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
+							<Text className="font-semibold text-xl">Milk</Text>
+							<Text className="text-lg mb-2">Choose 1</Text>
+							<View className="w-full flex-row flex-wrap justify-between">
+								{milkChoices.map(({ label, value }) => (
+									<TouchableHighlight
+										key={value}
+										activeOpacity={0.6}
+										underlayColor="#DDDDDD"
+										className="flex flex-row rounded-2xl w-1/2"
+										onPress={() => setMilkChoice(value)}
+									>
+										<View
+											className="flex flex-row
+																	"
+										>
+											<RadioButton
+												value={value}
+												status={milkChoice === value ? 'checked' : 'unchecked'}
+												onPress={() => setMilkChoice(value)}
+											/>
+											<Text className="items-center flex text-lg">{label}</Text>
+										</View>
+									</TouchableHighlight>
+								))}
+							</View>
+						</View>
+						{/* Toppings */}
+						<View className="border-t border-slate-300 px-8 py-4 my-4 w-full flex-grow">
+							<Text className="font-semibold text-xl">Toppings</Text>
+							<View className="w-full flex-row flex-wrap justify-between mt-2">
+								{toppingOptions.map(({ label, value }) => (
+									<TouchableHighlight
+										key={value}
+										activeOpacity={0.6}
+										underlayColor="#DDDDDD"
+										className="flex flex-row rounded-2xl w-1/2 max-w-1/2 overflow-hidden"
+										onPress={() => changeToppings(value)}
+									>
+										<View
+											className="flex flex-row overflow-hidden
+																	"
+										>
+											<Checkbox
+												status={
+													toppings.includes(value) ? 'checked' : 'unchecked'
+												}
+												onPress={() => changeToppings(value)}
+											/>
+											<Text className="items-center flex text-lg ">
+												{label}
+											</Text>
+										</View>
+									</TouchableHighlight>
+								))}
+								<TouchableOpacity
+									activeOpacity={0.6}
+									className="flex flex-row rounded-2xl overflow-hidden"
+								>
+									<View
+										className="flex flex-row
+																	"
+									>
+										<Checkbox
+											status={otherChecked ? 'checked' : 'unchecked'}
+											onPress={() => {
+												setOther();
+											}}
+										/>
+										<Text
+											className="items-center flex text-lg"
+											onPress={() => setOther()}
+										>
+											Other
+										</Text>
+										{otherChecked && (
+											<TextInput
+												className="ms-4 outline-none underline"
+												placeholder="Input toppings here..."
+												placeholderTextColor="#949494"
+												onChangeText={setOtherToppings}
+											/>
+										)}
+									</View>
+								</TouchableOpacity>
+							</View>
+						</View>
+						{/* Other Information */}
+						<View className="border-t border-slate-300 px-8 py-4  w-full flex-grow">
+							<Text className="font-semibold text-xl">Other Information</Text>
+							<View className="w-full border border-slate-300 rounded-lg h-24 mt-2">
+								<TextInput
+									className="p-4 outline-teal-700"
+									placeholder="Modifications, corrections, etc..."
+									placeholderTextColor="#949494"
+									numberOfLines={4}
+									multiline={true}
+									onChangeText={setOtherInfo}
+								/>
+							</View>
+						</View>
+						<TouchableOpacity
+							onPress={() => saveOrder()}
+							className="mx-auto py-2 px-4 mb-12 mt-8 border rounded-2xl bg-gray-200"
+						>
+							<Text className="font-bold text-xl">Save Order</Text>
+						</TouchableOpacity>
+					</View>
+				</ScrollView>
+			)}
 		</View>
 	);
 }
