@@ -156,16 +156,34 @@ export default function Order() {
 									Customizations: 50% Sweet, Light Ice, Grass Jelly
 								</Text>
 							)}
-							<Text className="text-blue-500">See more...</Text>
-							<View className="flex flex-row flex-wrap mt-2">
-								<View className="w-1/3 border-b border-black ps-2">
-									Category
+							<TouchableOpacity onPress={() => setSeeThat(!seeThat)}>
+								<Text className="text-blue-500">
+									{seeThat ? 'Show less' : 'See more...'}
+								</Text>
+							</TouchableOpacity>
+							{seeThat && (
+								<View className="flex flex-row flex-wrap mt-2">
+									<View className="w-1/3 p-2">Category</View>
+									<View className="w-1/3 border-x border-black p-2">
+										Customizations
+									</View>
+									<View className="w-1/3 p-2">Rating</View>
+									<View className="w-1/3 border-t border-black p-2">Size</View>
+									<View className="w-1/3 border border-b-0 border-black p-2">
+										Default
+									</View>
+									<View className="w-1/3 border-t border-black p-2"></View>
+									<View className="w-1/3 border-t border-black p-2">
+										Sweetness
+									</View>
+									<View className="w-1/3 border border-b-0 border-black p-2">
+										Half Sweet
+									</View>
+									<View className="w-1/3 border-t border-black p-2">
+										Too Sweet
+									</View>
 								</View>
-								<View className="w-1/3 border border-t-0 border-black ps-2">
-									Customizations
-								</View>
-								<View className="w-1/3 border-b border-black ps-2">Rating</View>
-							</View>
+							)}
 						</View>
 					</View>
 				</ScrollView>
