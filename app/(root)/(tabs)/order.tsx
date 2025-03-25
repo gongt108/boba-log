@@ -14,6 +14,7 @@ import images from '@/constants/images';
 
 export default function Order() {
 	const [isOrdering, setIsOrdering] = useState(false);
+	const [seeThat, setSeeThat] = useState(true);
 
 	const [size, setSize] = useState('regular');
 	const [sweetLevel, setSweetLevel] = useState('default');
@@ -142,6 +143,25 @@ export default function Order() {
 					</View>
 				</TouchableOpacity>
 			</View>
+
+			{!isOrdering && (
+				<ScrollView className="mt-4">
+					<View className="ms-4 ">
+						<Text className="text-xl font-semibold">Past Orders</Text>
+						{/* <Text className="text-md">No past orders yet.</Text> */}
+						<View className="mt-2">
+							<Text className="text-gray-500">03/23/2025</Text>
+							{!seeThat && (
+								<Text className="text-lg">
+									Customizations: 50% Sweet, Light Ice, Grass Jelly
+								</Text>
+							)}
+							<Text className="text-blue-500">See more...</Text>
+							<View></View>
+						</View>
+					</View>
+				</ScrollView>
+			)}
 
 			{isOrdering && (
 				<ScrollView>
