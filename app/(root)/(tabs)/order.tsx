@@ -146,7 +146,7 @@ export default function Order() {
 
 			{!isOrdering && (
 				<ScrollView className="mt-4">
-					<View className="ms-4 ">
+					<View className="mx-4 ">
 						<Text className="text-xl font-semibold">Past Orders</Text>
 						{/* <Text className="text-md">No past orders yet.</Text> */}
 						<View className="mt-2">
@@ -157,7 +157,15 @@ export default function Order() {
 								</Text>
 							)}
 							<Text className="text-blue-500">See more...</Text>
-							<View></View>
+							<View className="flex flex-row flex-wrap mt-2">
+								<View className="w-1/3 border-b border-black ps-2">
+									Category
+								</View>
+								<View className="w-1/3 border border-t-0 border-black ps-2">
+									Customizations
+								</View>
+								<View className="w-1/3 border-b border-black ps-2">Rating</View>
+							</View>
 						</View>
 					</View>
 				</ScrollView>
