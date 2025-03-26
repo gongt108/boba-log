@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Checkbox, RadioButton } from 'react-native-paper';
-
+import Ionicons from '@expo/vector-icons/Ionicons';
 import images from '@/constants/images';
 
 export default function Order() {
@@ -152,9 +152,12 @@ export default function Order() {
 						<View className="mt-2">
 							<Text className="text-gray-500">03/23/2025</Text>
 							{!seeThat && (
-								<Text className="text-lg">
-									Customizations: 50% Sweet, Light Ice, Grass Jelly
-								</Text>
+								<View>
+									<Text className="text-lg">
+										Customizations: 50% Sweet, Light Ice, Grass Jelly
+									</Text>
+									<Text className="text-lg">Review: Too sweet</Text>
+								</View>
 							)}
 							<TouchableOpacity onPress={() => setSeeThat(!seeThat)}>
 								<Text className="text-blue-500">
@@ -164,22 +167,24 @@ export default function Order() {
 							{seeThat && (
 								<View className="flex flex-row flex-wrap mt-2">
 									<View className="w-1/3 p-2">Category</View>
-									<View className="w-1/3 border-x border-black p-2">
+									<View className="w-1/3 border-x border-gray-300 p-2">
 										Customizations
 									</View>
-									<View className="w-1/3 p-2">Rating</View>
-									<View className="w-1/3 border-t border-black p-2">Size</View>
-									<View className="w-1/3 border border-b-0 border-black p-2">
+									<View className="w-1/3 p-2">Review</View>
+									<View className="w-1/3 border-t border-gray-300 bg-gray-200 p-2">
+										Size
+									</View>
+									<View className="w-1/3 border border-b-0 border-gray-300 bg-gray-200 p-2">
 										Default
 									</View>
-									<View className="w-1/3 border-t border-black p-2"></View>
-									<View className="w-1/3 border-t border-black p-2">
+									<View className="w-1/3 border-t border-gray-300 bg-gray-200 p-2"></View>
+									<View className="w-1/3 border-t border-gray-300 p-2">
 										Sweetness
 									</View>
-									<View className="w-1/3 border border-b-0 border-black p-2">
+									<View className="w-1/3 border border-b-0 border-gray-300 p-2">
 										Half Sweet
 									</View>
-									<View className="w-1/3 border-t border-black p-2">
+									<View className="w-1/3 border-t border-gray-300 p-2">
 										Too Sweet
 									</View>
 								</View>
@@ -414,6 +419,9 @@ export default function Order() {
 					</View>
 				</ScrollView>
 			)}
+			<TouchableOpacity className=" absolute top-8 left-6 opacity-55">
+				<Ionicons name="arrow-back" size={32} />
+			</TouchableOpacity>
 		</View>
 	);
 }
