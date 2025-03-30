@@ -28,6 +28,7 @@ const Auth = () => {
 		const result = await login();
 		if (result) {
 			//   refetch();
+			console.log('Login Successful');
 		} else {
 			Alert.alert('Error', 'Failed to login');
 		}
