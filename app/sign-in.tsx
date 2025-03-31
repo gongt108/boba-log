@@ -15,7 +15,7 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { login } from '@/lib/appwrite';
-import { Redirect } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import images from '@/constants/images';
@@ -46,7 +46,7 @@ const Auth = () => {
 				source={images.bobaBackground}
 				className="object-cover flex-1"
 			>
-				<View className="justify-center flex-1 bg-opacity-70 bg-white ">
+				<View className="justify-center flex-1 bg-opacity-70 bg-white">
 					<Text className="text-2xl mx-auto font-sourGummy">Sign In</Text>
 					<View className="w-fit mx-auto">
 						<View className="bg-orange-100 mt-2 mx-auto p-4 w-full md:w-1/4 space-y-2 rounded-md">
@@ -72,9 +72,26 @@ const Auth = () => {
 								accessibilityLabel="Learn more about this purple button"
 							/>
 						</View>
+						<View className="flex flex-row mt-2 w-full justify-center">
+							<Text className="text-lg">No account? </Text>
+							<TouchableOpacity
+								onPress={() => router.push(`/sign-up`)}
+								className="underline text-blue-500"
+							>
+								<View>
+									<Text className="text-lg text-blue-500 ml-2">
+										Sign up here.
+									</Text>
+								</View>
+							</TouchableOpacity>
+						</View>
+						<Text className="font-extrabold my-2 mx-auto text-lg">
+							{' '}
+							- OR -{' '}
+						</Text>
 						<TouchableOpacity
 							onPress={handleLogin}
-							className="bg-white shadow-md shadow-zinc-300 rounded-lg w-fit py-2 px-4 mt-5 mx-auto flex"
+							className="bg-white shadow-md shadow-zinc-300 rounded-lg w-fit py-2 px-4 mt-2 mx-auto flex"
 						>
 							<View className="flex flex-row items-center justify-center">
 								<Image
