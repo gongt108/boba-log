@@ -45,15 +45,24 @@ const SignUp = () => {
 		}
 	};
 
+	const validateEmail = (email) => {
+		// Regular expression for validating an email address
+		const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		return regex.test(email); // Returns true if the email matches the regex
+	};
+
 	const submitNewUser = () => {
 		if (!userName || !password || !passwordConfirmation) {
 			setErrorMessage('Please complete all fields.');
 			setShowError(true);
-		}
-
-		if (password != passwordConfirmation) {
+		} else if (!validateEmail(userName)) {
+			setErrorMessage('Please enter a valid email address.');
+			setShowError(true);
+		} else if (password != passwordConfirmation) {
 			setErrorMessage("Passwords don't match.");
 			setShowError(true);
+		} else {
+			router.push('/');
 		}
 	};
 
@@ -145,7 +154,7 @@ const SignUp = () => {
 					</View>
 				</View>
 				{showError && (
-					<View className="absolute bg-white rounded-lg p-5 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+					<View className="absolute bg-white rounded-lg p-5 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-80">
 						<Ionicons
 							name="close"
 							size={32}
@@ -153,7 +162,7 @@ const SignUp = () => {
 							className="justify-end flex"
 						/>
 						<Text className="font-sourGummy-bold text-center">Error</Text>
-						<Text className="font-sourGummy-medium">{errorMessage}</Text>
+						<Text className="font-sourGummy-medium mt-2">{errorMessage}</Text>
 					</View>
 				)}
 			</ImageBackground>
