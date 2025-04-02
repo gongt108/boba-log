@@ -8,6 +8,7 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { router } from 'expo-router';
 import { Checkbox, RadioButton } from 'react-native-paper';
 
 import OrderForm from '@/components/OrderForm';
@@ -61,8 +62,11 @@ export default function Order() {
 					<OrderForm />
 				</ScrollView>
 			)}
-			<TouchableOpacity className=" absolute top-8 left-6 opacity-55">
-				<Ionicons name="arrow-back" size={32} />
+			<TouchableOpacity
+				className=" absolute top-8 left-6 opacity-55"
+				onPress={() => router.back()}
+			>
+				<Ionicons name="arrow-back" color="#ccae88" size={32} />
 			</TouchableOpacity>
 		</View>
 	);

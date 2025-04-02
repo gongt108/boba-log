@@ -93,26 +93,13 @@ export default function Store() {
 					<View className="flex flex-row justify-between mt-4">
 						<Text className="text-lg">Drinks</Text>
 					</View>
-					<TouchableHighlight
-						activeOpacity={0.6}
-						underlayColor="#DDDDDD"
-						className="flex border-b border-slate-300"
-						onPress={() => handleCardPress()}
-					>
-						<View className="flex flex-row my-4 items-center ">
-							<Image
-								source={images.heyteaJasmineLatte}
-								resizeMode="contain"
-								className="w-[64px] h-[64px] rounded-full"
-								style={{
-									width: 64, // 64px
-									height: 64, // 64px
-									borderRadius: 32, // Half of the width/height for circular image
-								}}
-							/>
-							<Text className="ms-4 text-lg">Jasmine Latte</Text>
-						</View>
-					</TouchableHighlight>
+
+					<DrinkCard
+						drink={{
+							name: 'Moyun Coconut Blue',
+							img: images.heyteaMoyunCoconutBlue,
+						}}
+					/>
 					<DrinkCard
 						drink={{
 							name: 'Moyun Coconut Blue',

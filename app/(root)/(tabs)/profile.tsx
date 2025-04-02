@@ -100,7 +100,7 @@ const Profile = () => {
 				className="absolute top-12 left-6 opacity-55"
 				onPress={() => router.back()}
 			>
-				<Ionicons name="arrow-back" size={32} />
+				<Ionicons name="arrow-back" color="#ccae88" size={32} />
 			</TouchableOpacity>
 		</SafeAreaView>
 	);
