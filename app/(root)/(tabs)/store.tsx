@@ -73,7 +73,7 @@ export default function Store() {
 					</TouchableOpacity>
 				</View>
 			</View>
-			<View className="mt-4 ">
+			<View className="">
 				<View className="border-b border-gray-400 border-spacing-4">
 					<Text className="text-center text-3xl font-sourGummy-semibold">
 						HeyTea
