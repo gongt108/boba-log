@@ -1,10 +1,15 @@
 import { Image, Text, TouchableHighlight, View } from 'react-native';
 import { router } from 'expo-router';
-
+import { Models } from 'react-native-appwrite';
 import images from '@/constants/images';
 
-export const StoreCard = () => {
+interface Props {
+	item: Models.Document;
+}
+
+export const StoreCard = ({ item }: Props) => {
 	const handleCardPress = () => router.push(`/store`);
+	console.log(item);
 
 	return (
 		<TouchableHighlight
@@ -15,7 +20,7 @@ export const StoreCard = () => {
 		>
 			<View className="flex flex-row my-4 items-center ">
 				<Image
-					source={images.heyteaLogo}
+					source={{ uri: item.logo_photo }}
 					resizeMode="contain"
 					className="w-[64px] h-[64px] rounded-full"
 					style={{
@@ -25,7 +30,7 @@ export const StoreCard = () => {
 					}}
 				/>
 				<View className="flex flex-col">
-					<Text className="ms-4 text-lg">HeyTea</Text>
+					<Text className="ms-4 text-lg">{item.name}</Text>
 					<Text className="ms-4 text-gray-600">Sunnyvale, CA</Text>
 				</View>
 			</View>

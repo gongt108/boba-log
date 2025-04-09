@@ -1,4 +1,12 @@
-import { Account, Avatars, Client, OAuthProvider } from 'react-native-appwrite';
+import {
+	Account,
+	Avatars,
+	Client,
+	Databases,
+	OAuthProvider,
+	Query,
+	Storage,
+} from 'react-native-appwrite';
 import * as Linking from 'expo-linking';
 import { openAuthSessionAsync } from 'expo-web-browser';
 
@@ -10,6 +18,10 @@ export const config = {
 	col: {
 		reviews: '67eaa4f30039ec1fb67c',
 	},
+	databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
+	storesCollectionId: process.env.EXPO_PUBLIC_APPWRITE_STORES_COLLECTION_ID,
+	drinksCollectionId: process.env.EXPO_PUBLIC_APPWRITE_DRINKS_COLLECTION_ID,
+	reviewsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_REVIEWS_COLLECTION_ID,
 };
 
 export const client = new Client();
@@ -21,6 +33,8 @@ client
 
 export const avatar = new Avatars(client);
 export const account = new Account(client);
+export const databases = new Databases(client);
+export const storage = new Storage(client);
 
 export async function login() {
 	try {
@@ -85,6 +99,58 @@ export async function getCurrentUser() {
 		return null;
 	} catch (error) {
 		console.log(error);
+		return null;
+	}
+}
+
+export async function getStores({
+	filter,
+	query,
+	limit,
+}: {
+	filter: string;
+	query: string;
+	limit?: number;
+}) {
+	try {
+		const buildQuery = [Query.orderAsc('name')];
+
+		if (filter && filter !== 'All')
+			buildQuery.push(Query.equal('type', filter));
+
+		if (query)
+			buildQuery.push(
+				Query.or([
+					Query.search('name', query),
+					Query.search('address', query),
+					Query.search('type', query),
+				])
+			);
+		if (limit) buildQuery.push(Query.limit(limit));
+
+		const result = await databases.listDocuments(
+			config.databaseId!,
+			config.storesCollectionId!,
+			buildQuery
+		);
+
+		return result.documents;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
+}
+
+export async function getStoreById({ id }: { id: string }) {
+	try {
+		const result = await databases.getDocument(
+			config.databaseId!,
+			config.storesCollectionId!,
+			id
+		);
+		return result;
+	} catch (error) {
+		console.error(error);
 		return null;
 	}
 }

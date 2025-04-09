@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
+	ActivityIndicator,
+	FlatList,
 	Text,
 	View,
 	TouchableHighlight,
@@ -7,14 +9,44 @@ import {
 	Image,
 } from 'react-native';
 import { Button, Searchbar } from 'react-native-paper';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 
 import images from '@/constants/images';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { StoreCard } from '@/components/StoreCard';
 
+import { useAppwrite } from '@/lib/useAppwrite';
+import { useGlobalContext } from '@/lib/global-provider';
+import { getStores } from '@/lib/appwrite';
+
 export default function Index() {
+	const { user } = useGlobalContext();
+
+	const params = useLocalSearchParams<{ query?: string; filter?: string }>();
+
+	const {
+		data: stores,
+		refetch,
+		loading,
+	} = useAppwrite({
+		fn: getStores,
+		params: {
+			filter: params.filter!,
+			query: params.query!,
+			limit: 6,
+		},
+		skip: true,
+	});
+
+	useEffect(() => {
+		refetch({
+			filter: params.filter!,
+			query: params.query!,
+			limit: 6,
+		});
+	}, [params.filter, params.query]);
+
 	const [searchQuery, setSearchQuery] = useState('');
 
 	const handleSearch = () => router.push(`/find`);
@@ -58,8 +90,20 @@ export default function Index() {
 						</Text>
 					</View>
 
-					<StoreCard />
-					<StoreCard />
+					{/* <StoreCard />
+					<StoreCard /> */}
+					{loading ? (
+						<ActivityIndicator size="large" className="text-primary-300" />
+					) : !stores || stores.length === 0 ? (
+						<Text>No Results</Text>
+					) : (
+						<FlatList
+							data={stores}
+							renderItem={(item) => <StoreCard item={item.item} />}
+							keyExtractor={(item) => item.$id}
+							contentContainerClassName="flex gap-5 mt-5 w-full"
+						/>
+					)}
 				</View>
 			</View>
 		</View>
