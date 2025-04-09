@@ -108,8 +108,8 @@ export async function getStores({
 	query,
 	limit,
 }: {
-	filter: string;
-	query: string;
+	filter?: string;
+	query?: string;
 	limit?: number;
 }) {
 	try {
@@ -118,14 +118,8 @@ export async function getStores({
 		if (filter && filter !== 'All')
 			buildQuery.push(Query.equal('type', filter));
 
-		if (query)
-			buildQuery.push(
-				Query.or([
-					Query.search('name', query),
-					Query.search('address', query),
-					Query.search('type', query),
-				])
-			);
+		if (query) buildQuery.push(Query.or([Query.search('name', query)]));
+
 		if (limit) buildQuery.push(Query.limit(limit));
 
 		const result = await databases.listDocuments(

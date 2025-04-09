@@ -49,7 +49,13 @@ export default function Index() {
 
 	const [searchQuery, setSearchQuery] = useState('');
 
-	const handleSearch = () => router.push(`/find`);
+	const handleSearch = () =>
+		router.push({
+			pathname: '/find',
+			params: {
+				query: searchQuery,
+			},
+		});
 	const handleCardPress = () => router.push(`/find`);
 
 	return (
