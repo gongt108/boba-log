@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const StoreCard = ({ item }: Props) => {
-	const handleCardPress = () => router.push(`/store`);
+	const handleCardPress = () => router.push(`/stores/${item.$id}`);
 
 	return (
 		<TouchableHighlight

@@ -25,7 +25,6 @@ export default function Find() {
 	// console.log(query);
 
 	const params = useLocalSearchParams();
-	console.log(params);
 
 	const {
 		data: stores,
@@ -38,6 +37,7 @@ export default function Find() {
 		},
 		skip: true,
 	});
+	console.log(stores);
 
 	useEffect(() => {
 		refetch({
@@ -70,7 +70,7 @@ export default function Find() {
 				value={searchQuery}
 				onSubmitEditing={handleSearch}
 			/>
-			<Text>{params.query}</Text>
+
 			{loading ? (
 				<ActivityIndicator size="large" className="text-primary-300" />
 			) : !filteredStores || filteredStores.length === 0 ? (
