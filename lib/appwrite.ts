@@ -148,3 +148,17 @@ export async function getStoreById({ id }: { id: string }) {
 		return null;
 	}
 }
+
+export async function getDrinkById({ id }: { id: string }) {
+	try {
+		const result = await databases.getDocument(
+			config.databaseId!,
+			config.drinksCollectionId!,
+			id
+		);
+		return result;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
