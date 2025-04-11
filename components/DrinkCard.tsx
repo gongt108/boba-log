@@ -7,20 +7,17 @@ import {
 	View,
 } from 'react-native';
 import { router } from 'expo-router';
+import { Models } from 'react-native-appwrite';
+
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import images from '@/constants/images';
 
-interface Drink {
-	img: ImageSourcePropType;
-	name: string;
+interface Props {
+	drink: Models.Document;
 }
 
-interface DrinkProps {
-	drink: Drink;
-}
-
-const DrinkCard = ({ drink }: DrinkProps) => {
+const DrinkCard = ({ drink }: Props) => {
 	const handleCardPress = () => router.push(`/order`);
 
 	return (
@@ -33,7 +30,7 @@ const DrinkCard = ({ drink }: DrinkProps) => {
 			<View className="flex flex-row my-4 items-center justify-between">
 				<View className="flex flex-row items-center">
 					<Image
-						source={drink.img}
+						source={{ uri: drink.image }}
 						resizeMode="contain"
 						className="w-[64px] h-[64px] rounded-full"
 						style={{
@@ -44,7 +41,6 @@ const DrinkCard = ({ drink }: DrinkProps) => {
 					/>
 					<Text className="ms-4 text-lg">{drink.name}</Text>
 				</View>
-				<Ionicons name="checkmark-circle" size={32} />
 			</View>
 		</TouchableOpacity>
 	);

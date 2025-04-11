@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import {
+	ActivityIndicator,
+	FlatList,
 	Text,
 	TextInput,
 	View,
 	TouchableHighlight,
 	TouchableOpacity,
 	Image,
+	ScrollView,
 } from 'react-native';
 import { Button, Searchbar } from 'react-native-paper';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
+
+import { useAppwrite } from '@/lib/useAppwrite';
+import { getStoreById } from '@/lib/appwrite';
 
 import images from '@/constants/images';
 import DrinkCard from '@/components/DrinkCard';
@@ -19,7 +25,14 @@ export default function Store() {
 	const [isSearching, setIsSearching] = useState(false);
 	const [searchQuery, setSearchQuery] = useState('');
 
-	const handleCardPress = () => router.push(`/find`);
+	const { id } = useLocalSearchParams<{ id?: string }>();
+
+	const { data: store, loading } = useAppwrite({
+		fn: getStoreById,
+		params: {
+			id: id!,
+		},
+	});
 
 	return (
 		<View className="flex-1 p-8 pt-12">
@@ -73,39 +86,42 @@ export default function Store() {
 					</TouchableOpacity>
 				</View>
 			</View>
-			<View className="">
-				<View className="border-b border-gray-400 border-spacing-4">
-					<Text className="text-center text-3xl font-sourGummy-semibold">
-						HeyTea
-					</Text>
-					<Image
-						source={images.heyteaStore}
-						resizeMode="cover"
-						style={{
-							maxWidth: '100%',
-							height: 200, // 64px
-						}}
-						className="my-4 mx-auto"
-					/>
-				</View>
+			<View className="flex-grow">
+				{store && (
+					<View className="border-b border-gray-400 border-spacing-4">
+						<Text className="text-center text-3xl font-sourGummy-semibold">
+							{store.name}
+						</Text>
 
-				<View className="flex">
+						<Image
+							source={{
+								uri: store.cover_photo,
+							}}
+							resizeMode="cover"
+							style={{
+								maxWidth: '100%',
+								width: '100%',
+								height: 200,
+							}}
+							className="my-4 mx-auto"
+						/>
+					</View>
+				)}
+
+				<View className="flex-grow">
 					<View className="flex flex-row justify-between mt-4">
 						<Text className="text-lg">Drinks</Text>
 					</View>
 
-					<DrinkCard
-						drink={{
-							name: 'Moyun Coconut Blue',
-							img: images.heyteaMoyunCoconutBlue,
-						}}
-					/>
-					<DrinkCard
-						drink={{
-							name: 'Moyun Coconut Blue',
-							img: images.heyteaMoyunCoconutBlue,
-						}}
-					/>
+					{loading ? (
+						<ActivityIndicator size="large" className="text-primary-300" />
+					) : (
+						<ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+							{store?.drinks?.map((item) => (
+								<DrinkCard key={item.$id} drink={item} />
+							))}
+						</ScrollView>
+					)}
 				</View>
 			</View>
 		</View>
