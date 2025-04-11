@@ -8,8 +8,11 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Checkbox, RadioButton } from 'react-native-paper';
+
+import { useAppwrite } from '@/lib/useAppwrite';
+import { getDrinkById } from '@/lib/appwrite';
 
 import OrderForm from '@/components/OrderForm';
 import PastReview from '@/components/PastReview';
@@ -20,18 +23,38 @@ import images from '@/constants/images';
 export default function Order() {
 	const [isOrdering, setIsOrdering] = useState(false);
 
+	const { id } = useLocalSearchParams<{ id?: string }>();
+
+	const { data: drink, loading } = useAppwrite({
+		fn: getDrinkById,
+		params: {
+			id: id!,
+		},
+	});
+
+	console.log(drink?.image);
+
 	return (
 		<View className="relative flex-1">
-			<View className="mx-auto mt-8">
-				<Image
-					source={images.heyteaMoyunCoconutBlue}
-					className="rounded-full"
-				/>
-				<Text className="mt-4 text-2xl text-center font-semibold">
-					Moyun Coconut Blue
-				</Text>
-				<Text className="text-center text-lg">HeyTea</Text>
-			</View>
+			{drink && (
+				<View className="mx-auto mt-12">
+					<Image
+						source={{
+							uri: 'https://image.fantuan.ca/image/goods/1897178098248527872_cover@375x250@fantuan.api@@@webp.jpg',
+						}}
+						style={{
+							width: 200,
+							height: 200,
+						}}
+						resizeMode="cover"
+						className="rounded-full"
+					/>
+					<Text className="mt-4 text-2xl text-center font-semibold">
+						{drink.name}
+					</Text>
+					<Text className="text-center text-lg">{drink.stores[0].name}</Text>
+				</View>
+			)}
 			<View className="mt-4 border-y border-slate-300">
 				<TouchableOpacity onPress={() => setIsOrdering(!isOrdering)}>
 					<View className="my-4 ">

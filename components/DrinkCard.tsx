@@ -18,7 +18,7 @@ interface Props {
 }
 
 const DrinkCard = ({ drink }: Props) => {
-	const handleCardPress = () => router.push(`/order`);
+	const handleCardPress = () => router.push(`/drinks/${drink.$id}`);
 
 	return (
 		<TouchableOpacity

@@ -19,7 +19,6 @@ import { getStoreById } from '@/lib/appwrite';
 import images from '@/constants/images';
 import DrinkCard from '@/components/DrinkCard';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 export default function Store() {
 	const [isSearching, setIsSearching] = useState(false);
