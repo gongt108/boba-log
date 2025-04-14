@@ -3,10 +3,12 @@ import {
 	Avatars,
 	Client,
 	Databases,
+	ID,
 	OAuthProvider,
 	Query,
 	Storage,
 } from 'react-native-appwrite';
+
 import * as Linking from 'expo-linking';
 import { openAuthSessionAsync } from 'expo-web-browser';
 
@@ -21,6 +23,7 @@ export const config = {
 	databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
 	storesCollectionId: process.env.EXPO_PUBLIC_APPWRITE_STORES_COLLECTION_ID,
 	drinksCollectionId: process.env.EXPO_PUBLIC_APPWRITE_DRINKS_COLLECTION_ID,
+	ordersCollectionId: process.env.EXPO_PUBLIC_APPWRITE_ORDERS_COLLECTION_ID,
 	reviewsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_REVIEWS_COLLECTION_ID,
 };
 
@@ -159,6 +162,84 @@ export async function getDrinkById({ id }: { id: string }) {
 		return result;
 	} catch (error) {
 		console.error(error);
+		return null;
+	}
+}
+
+// Order creation
+type Size = 'default' | 'regular' | 'large';
+type Sweetness =
+	| 'no sugar'
+	| 'little sugar'
+	| 'half sugar'
+	| 'less sugar'
+	| 'full sugar';
+type Ice = 'no ice' | 'little ice' | 'normal ice' | 'less ice' | 'extra ice';
+type Milk =
+	| 'default'
+	| 'no milk'
+	| '2% milk'
+	| 'almond milk'
+	| 'fresh milk'
+	| 'half & half'
+	| 'lactaid'
+	| 'lactose-free milk'
+	| 'oat milk'
+	| 'soy milk'
+	| 'whole milk';
+type Toppings =
+	| 'aloe'
+	| 'brown-sugar-boba'
+	| 'cheese-foam'
+	| 'crystal-boba'
+	| 'grass-jelly'
+	| 'honey-boba'
+	| 'lychee-jelly'
+	| 'pudding'
+	| 'strawberry-popping-boba'
+	| 'taro';
+
+type CreateOrderParams = {
+	drinkId: string;
+	size?: Size;
+	sweetness?: Sweetness;
+	ice?: Ice;
+	milk?: Milk;
+	other?: string;
+	toppings?: Toppings[];
+	topping?: [];
+};
+
+export async function createOrder({
+	drinkId,
+	size,
+	sweetness,
+	ice,
+	milk,
+	other,
+	toppings = [],
+	topping = [],
+}: CreateOrderParams) {
+	try {
+		const result = await databases.createDocument(
+			config.databaseId!,
+			config.ordersCollectionId!,
+			ID.unique(),
+			{
+				drinkId,
+				size,
+				sweetness,
+				ice,
+				milk,
+				other,
+				toppings,
+				topping: [],
+				reviews: [],
+			}
+		);
+		return result;
+	} catch (error) {
+		console.error('Error creating drink:', error);
 		return null;
 	}
 }

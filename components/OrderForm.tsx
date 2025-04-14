@@ -47,7 +47,7 @@ const toppingOptions = [
 	{ label: 'Agar/Crystal Boba', value: 'crystal-boba' },
 	{ label: 'Aloe Vera', value: 'aloe' },
 	{ label: 'Brown Sugar Boba', value: 'brown-sugar-boba' },
-	{ label: 'Cheese Foam', value: 'coffee-jelly' },
+	{ label: 'Cheese Foam', value: 'cheese-foam' },
 	{ label: 'Grass Jelly', value: 'grass-jelly' },
 	{ label: 'Honey Boba', value: 'honey-boba' },
 	{ label: 'Lychee Jelly', value: 'lychee-jelly' },

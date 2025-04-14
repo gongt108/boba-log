@@ -66,7 +66,7 @@ export default function Order() {
 								</Text>
 							</View>
 						) : (
-							<Text className="text-blue-600 flex justify-end me-4 text-lg">
+							<Text className="text-blue-600 flex justify-end ms-4 text-lg">
 								Show Order Form
 							</Text>
 						)}
