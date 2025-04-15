@@ -32,8 +32,6 @@ export default function Order() {
 		},
 	});
 
-	console.log(drink?.image);
-
 	return (
 		<View className="relative flex-1">
 			{drink && (

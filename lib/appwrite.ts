@@ -167,15 +167,28 @@ export async function getDrinkById({ id }: { id: string }) {
 }
 
 // Order creation
-type Size = 'default' | 'regular' | 'large';
-type Sweetness =
+export type Size = 'default' | 'regular' | 'large';
+
+export type Sweetness =
+	| 'default'
 	| 'no sugar'
 	| 'little sugar'
 	| 'half sugar'
 	| 'less sugar'
-	| 'full sugar';
-type Ice = 'no ice' | 'little ice' | 'normal ice' | 'less ice' | 'extra ice';
-type Milk =
+	| 'full sugar'
+	| 'extra sugar';
+
+export type Ice =
+	| 'default'
+	| 'none'
+	| 'little ice'
+	| 'half ice'
+	| 'less ice'
+	| 'full ice'
+	| 'extra ice'
+	| 'hot';
+
+export type Milk =
 	| 'default'
 	| 'no milk'
 	| '2% milk'
@@ -187,7 +200,8 @@ type Milk =
 	| 'oat milk'
 	| 'soy milk'
 	| 'whole milk';
-type Toppings =
+
+export type Toppings =
 	| 'aloe'
 	| 'brown-sugar-boba'
 	| 'cheese-foam'
@@ -197,7 +211,8 @@ type Toppings =
 	| 'lychee-jelly'
 	| 'pudding'
 	| 'strawberry-popping-boba'
-	| 'taro';
+	| 'taro'
+	| 'other';
 
 type CreateOrderParams = {
 	drinkId: string;
