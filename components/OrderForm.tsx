@@ -12,9 +12,14 @@ import { Checkbox, RadioButton } from 'react-native-paper';
 
 import { router } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useAppwrite } from '@/lib/useAppwrite';
 
 import {
 	createOrder,
+	CreateOrderParams,
+	createPosts,
+	getCurrentUser,
+	getOrders,
 	Ice,
 	Milk,
 	Size,
@@ -50,16 +55,16 @@ const iceLevels: { label: string; value: Ice }[] = [
 
 const milkChoices: { label: string; value: Milk }[] = [
 	{ label: 'Default', value: 'default' },
-	{ label: 'None', value: 'no milk' },
-	{ label: '2% Milk', value: '2% milk' },
-	{ label: 'Almond Milk', value: 'almond milk' },
-	{ label: 'Fresh Milk', value: 'fresh milk' },
-	{ label: 'Half & half', value: 'half & half' },
-	{ label: 'Lactaid', value: 'lactaid' },
-	{ label: 'Lactose Free', value: 'lactose-free milk' },
-	{ label: 'Oat Milk', value: 'oat milk' },
-	{ label: 'Soy Milk', value: 'soy milk' },
-	{ label: 'Whole Milk', value: 'whole milk' },
+	{ label: 'None', value: 'none' },
+	{ label: '2% Milk', value: '2%' },
+	{ label: 'Almond Milk', value: 'almond' },
+	{ label: 'Fresh Milk', value: 'fresh' },
+	{ label: 'Half & half', value: 'half&half' },
+	{ label: 'Heavy Cream', value: 'cream' },
+	{ label: 'Lactose Free', value: 'lactose-free' },
+	{ label: 'Oat Milk', value: 'oat' },
+	{ label: 'Soy Milk', value: 'soy' },
+	{ label: 'Whole Milk', value: 'whole' },
 ];
 
 const toppingOptions: { label: string; value: Toppings }[] = [
@@ -76,18 +81,26 @@ const toppingOptions: { label: string; value: Toppings }[] = [
 	{ label: 'Other', value: 'other' },
 ];
 
-const OrderForm = () => {
+type OrderFormProps = {
+	drink: string;
+};
+
+const OrderForm = ({ drink }: OrderFormProps) => {
 	const [formData, setFormData] = useState({
-		drinkId: '',
-		size: undefined,
-		sweetness: undefined,
-		ice: undefined,
-		milk: undefined,
+		drink: drink,
+		size: 'default' as Size,
+		sweetness: 'default' as Sweetness,
+		ice: 'default' as Ice,
+		milk: 'default' as Milk,
 		other: '',
 		toppings: [] as Toppings[],
-	});
+	} as CreateOrderParams);
 	const [otherToppings, setOtherToppings] = useState('');
 	const [otherInfo, setOtherInfo] = useState('');
+
+	const { data: user } = useAppwrite({
+		fn: getCurrentUser,
+	});
 
 	const selectCustomization = <K extends keyof typeof formData>(
 		field: K,
@@ -108,14 +121,25 @@ const OrderForm = () => {
 		}));
 	};
 
-	const saveOrder = () => {
-		const customizations = {
-			...formData,
-		};
+	const { data: orders, loading } = useAppwrite({
+		fn: getOrders,
+	});
+
+	const saveOrder = async () => {
+		await createOrder({
+			drink: formData.drink,
+			size: formData.size,
+			ice: formData.ice,
+			sweetness: formData.sweetness,
+			milk: formData.milk,
+			topping: formData.topping,
+			toppings: formData.toppings,
+		});
 	};
 
 	return (
 		<View className="mt-4">
+			{orders && <Text>Exists</Text>}
 			<View className=" px-8 pt-4 mb-4">
 				<Text className="font-semibold text-xl">Size</Text>
 				<Text className="text-lg mb-2">Choose 1</Text>
@@ -124,6 +148,7 @@ const OrderForm = () => {
 						underlayColor="#DDDDDD"
 						className="flex flex-row rounded-2xl"
 						onPress={() => selectCustomization('size', value)}
+						key={value}
 					>
 						<View
 							className="flex flex-row
@@ -256,13 +281,14 @@ const OrderForm = () => {
 					{formData.toppings.includes(
 						toppingOptions.at(-1)?.value as Toppings
 					) && (
-						<TextInput
-							className="outline-none underline"
-							style={{ marginLeft: -20 }}
-							placeholder="Input toppings here..."
-							placeholderTextColor="#949494"
-							onChangeText={setOtherToppings}
-						/>
+						<View className="w-1/2 -ml-7/8 flex-row items-center">
+							<TextInput
+								className="outline-none underline"
+								placeholder="Input toppings here..."
+								placeholderTextColor="#949494"
+								onChangeText={setOtherToppings}
+							/>
+						</View>
 					)}
 				</View>
 			</View>

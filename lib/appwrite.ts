@@ -5,7 +5,9 @@ import {
 	Databases,
 	ID,
 	OAuthProvider,
+	Permission,
 	Query,
+	Role,
 	Storage,
 } from 'react-native-appwrite';
 
@@ -190,16 +192,16 @@ export type Ice =
 
 export type Milk =
 	| 'default'
-	| 'no milk'
-	| '2% milk'
-	| 'almond milk'
-	| 'fresh milk'
-	| 'half & half'
-	| 'lactaid'
-	| 'lactose-free milk'
-	| 'oat milk'
-	| 'soy milk'
-	| 'whole milk';
+	| 'none'
+	| '2%'
+	| 'almond'
+	| 'cream'
+	| 'fresh'
+	| 'half&half'
+	| 'lactose-free'
+	| 'oat'
+	| 'soy'
+	| 'whole';
 
 export type Toppings =
 	| 'aloe'
@@ -214,8 +216,8 @@ export type Toppings =
 	| 'taro'
 	| 'other';
 
-type CreateOrderParams = {
-	drinkId: string;
+export type CreateOrderParams = {
+	drink?: string;
 	size?: Size;
 	sweetness?: Sweetness;
 	ice?: Ice;
@@ -223,38 +225,67 @@ type CreateOrderParams = {
 	other?: string;
 	toppings?: Toppings[];
 	topping?: [];
+	reviews?: [];
 };
 
-export async function createOrder({
-	drinkId,
-	size,
-	sweetness,
-	ice,
-	milk,
-	other,
-	toppings = [],
-	topping = [],
-}: CreateOrderParams) {
+// export async function createOrder(newOrder: CreateOrderParams) {
+// 	try {
+// 		const user = await getCurrentUser();
+// 		if (!user || !user.$id) {
+// 			throw new Error('User not authenticated');
+// 		}
+
+// 		const result = await databases.createDocument(
+// 			config.databaseId!,
+// 			'67ee3c2a0020ce5386c3',
+// 			ID.unique(),
+// 			newOrder
+// 		);
+// 	} catch (error) {
+// 		console.error('Error creating order:', error);
+// 		return null;
+// 	}
+// }
+
+export async function getOrders() {
+	try {
+		const result = await databases.listDocuments(
+			config.databaseId!,
+			config.ordersCollectionId!,
+			[Query.limit(100)]
+		);
+
+		return result.documents;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
+}
+
+export async function createPosts(content) {
 	try {
 		const result = await databases.createDocument(
 			config.databaseId!,
-			config.ordersCollectionId!,
+			'681afa76002d8010cc4f',
 			ID.unique(),
-			{
-				drinkId,
-				size,
-				sweetness,
-				ice,
-				milk,
-				other,
-				toppings,
-				topping: [],
-				reviews: [],
-			}
+			{ body: content }
 		);
-		return result;
 	} catch (error) {
-		console.error('Error creating drink:', error);
+		console.error(error);
+		return null;
+	}
+}
+
+export async function createOrder(newOrder: CreateOrderParams) {
+	try {
+		const result = await databases.createDocument(
+			config.databaseId!,
+			'681c30eb001f8647d5ff',
+			ID.unique(),
+			newOrder
+		);
+	} catch (error) {
+		console.error('Error creating order:', error);
 		return null;
 	}
 }

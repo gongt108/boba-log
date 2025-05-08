@@ -8,11 +8,8 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router } from 'expo-router';
 import { Checkbox, RadioButton } from 'react-native-paper';
-
-import { useAppwrite } from '@/lib/useAppwrite';
-import { getDrinkById, getOrders, createPosts } from '@/lib/appwrite';
 
 import OrderForm from '@/components/OrderForm';
 import PastReview from '@/components/PastReview';
@@ -23,36 +20,18 @@ import images from '@/constants/images';
 export default function Order() {
 	const [isOrdering, setIsOrdering] = useState(false);
 
-	const { id } = useLocalSearchParams<{ id?: string }>();
-
-	const { data: drink, loading } = useAppwrite({
-		fn: getDrinkById,
-		params: {
-			id: id!,
-		},
-	});
-
 	return (
 		<View className="relative flex-1">
-			{drink && (
-				<View className="mx-auto mt-12">
-					<Image
-						source={{
-							uri: 'https://image.fantuan.ca/image/goods/1897178098248527872_cover@375x250@fantuan.api@@@webp.jpg',
-						}}
-						style={{
-							width: 200,
-							height: 200,
-						}}
-						resizeMode="cover"
-						className="rounded-full"
-					/>
-					<Text className="mt-4 text-2xl text-center font-semibold">
-						{drink.name}
-					</Text>
-					<Text className="text-center text-lg">{drink.stores[0].name}</Text>
-				</View>
-			)}
+			<View className="mx-auto mt-8">
+				<Image
+					source={images.heyteaMoyunCoconutBlue}
+					className="rounded-full"
+				/>
+				<Text className="mt-4 text-2xl text-center font-semibold">
+					Moyun Coconut Blue
+				</Text>
+				<Text className="text-center text-lg">HeyTea</Text>
+			</View>
 			<View className="mt-4 border-y border-slate-300">
 				<TouchableOpacity onPress={() => setIsOrdering(!isOrdering)}>
 					<View className="my-4 ">
@@ -64,7 +43,7 @@ export default function Order() {
 								</Text>
 							</View>
 						) : (
-							<Text className="text-blue-600 flex justify-end ms-4 text-lg">
+							<Text className="text-blue-600 flex justify-end me-4 text-lg">
 								Show Order Form
 							</Text>
 						)}
@@ -80,7 +59,7 @@ export default function Order() {
 
 			{isOrdering && (
 				<ScrollView>
-					<OrderForm drink={drink?.$id} />
+					<OrderForm />
 				</ScrollView>
 			)}
 			<TouchableOpacity
