@@ -126,7 +126,7 @@ const OrderForm = ({ drink }: OrderFormProps) => {
 	});
 
 	const saveOrder = async () => {
-		await createOrder({
+		const order = await createOrder({
 			drink: formData.drink,
 			size: formData.size,
 			ice: formData.ice,
@@ -135,6 +135,8 @@ const OrderForm = ({ drink }: OrderFormProps) => {
 			topping: formData.topping,
 			toppings: formData.toppings,
 		});
+
+		console.log(order);
 	};
 
 	return (

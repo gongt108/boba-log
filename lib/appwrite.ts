@@ -284,6 +284,8 @@ export async function createOrder(newOrder: CreateOrderParams) {
 			ID.unique(),
 			newOrder
 		);
+
+		return result;
 	} catch (error) {
 		console.error('Error creating order:', error);
 		return null;
