@@ -13,7 +13,12 @@ import { router } from 'expo-router';
 import images from '@/constants/images';
 import DrinkCard from '@/components/DrinkCard';
 
-const ReviewForm = () => {
+type ReviewFormProps = {
+	drink: object;
+	order: object;
+};
+
+const ReviewForm = ({ drink, order }: ReviewFormProps) => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [otherInfo, setOtherInfo] = useState('');
 
