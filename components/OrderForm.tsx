@@ -78,18 +78,27 @@ const OrderForm = ({ drink }: OrderFormProps) => {
 		fn: getOrders,
 	});
 
-	const saveOrder = async () => {
-		const order = await createOrder({
-			drink: formData.drink,
-			size: formData.size,
-			ice: formData.ice,
-			sweetness: formData.sweetness,
-			milk: formData.milk,
-			topping: formData.topping,
-			toppings: formData.toppings,
-		});
+	// const saveOrder = async () => {
+	// 	const order = await createOrder({
+	// 		drink: formData.drink,
+	// 		size: formData.size,
+	// 		ice: formData.ice,
+	// 		sweetness: formData.sweetness,
+	// 		milk: formData.milk,
+	// 		topping: formData.topping,
+	// 		toppings: formData.toppings,
+	// 	});
 
-		console.log(order);
+	// 	console.log(order);
+
+	// 	if (order) {
+	// 		router.push(`/reviews/${order.$id}`);
+
+	// 	}
+	// };
+
+	const saveOrder = () => {
+		router.push(`/reviews/6822d23c000f32cecdd0`);
 	};
 
 	return (

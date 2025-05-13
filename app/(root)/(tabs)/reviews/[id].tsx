@@ -1,36 +1,40 @@
-import React, { useState } from 'react';
 import {
+	Image,
+	View,
+	ScrollView,
 	Text,
 	TextInput,
-	View,
 	TouchableHighlight,
 	TouchableOpacity,
-	Image,
 } from 'react-native';
-import { Button, Searchbar } from 'react-native-paper';
-import { router } from 'expo-router';
+import React, { useState, useEffect } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
+
+import { useAppwrite } from '@/lib/useAppwrite';
+import {
+	getDrinkById,
+	getOrders,
+	createPosts,
+	getOrderById,
+} from '@/lib/appwrite';
 
 import images from '@/constants/images';
-import DrinkCard from '@/components/DrinkCard';
 
-import {
-	iceLevels,
-	milkChoices,
-	sizeOptions,
-	sweetLevels,
-	toppingOptions,
-} from '@/constants/customizations';
-
-type ReviewFormProps = {
-	drink: object;
-	order: object;
-};
-
-const ReviewForm = ({ drink, order }: ReviewFormProps) => {
+export default function Review() {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [otherInfo, setOtherInfo] = useState('');
 
 	const handleCardPress = () => router.push(`/find`);
+	const { id } = useLocalSearchParams<{ id?: string }>();
+
+	const { data: order, loading } = useAppwrite({
+		fn: getOrderById,
+		params: {
+			id: id!,
+		},
+	});
+
+	console.log(order);
 
 	return (
 		<View className="flex-1">
@@ -50,7 +54,7 @@ const ReviewForm = ({ drink, order }: ReviewFormProps) => {
 						<Text className="text-xl font-semibold">
 							What would you change?
 						</Text>
-						<Text className="text-lg mt-2">Size: {order.size}</Text>
+						<Text className="text-lg mt-2">Size: Default</Text>
 						<View className="flex-row space-x-2 items-center mt-2">
 							<TouchableOpacity
 								activeOpacity={0.6}
@@ -74,7 +78,7 @@ const ReviewForm = ({ drink, order }: ReviewFormProps) => {
 								<Text className="text-md text-center">Too Small</Text>
 							</TouchableOpacity>
 						</View>
-						<Text className="text-lg mt-2">Ice: {order.ice}</Text>
+						<Text className="text-lg mt-2">Ice: Default</Text>
 						<View className="flex-row space-x-2 mt-2">
 							<TouchableOpacity
 								activeOpacity={0.6}
@@ -100,7 +104,7 @@ const ReviewForm = ({ drink, order }: ReviewFormProps) => {
 								<Text className="text-md text-center">Less Ice</Text>
 							</TouchableOpacity>
 						</View>
-						<Text className="text-lg mt-2">Sugar: {order.sweetness}</Text>
+						<Text className="text-lg mt-2">Sugar: Default</Text>
 						<View className="flex-row space-x-2 items-center mt-2">
 							<TouchableOpacity
 								activeOpacity={0.6}
@@ -126,21 +130,21 @@ const ReviewForm = ({ drink, order }: ReviewFormProps) => {
 						</View>
 						<Text className="text-lg mt-2">Toppings: Grass Jelly</Text>
 						{/* <View className="flex-row justify-between items-center mx-4 mt-2">
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                className="h-fit w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-                                onPress={() => handleCardPress()}
-                            >
-                                <Text className="text-md text-center">Good</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-                                onPress={() => handleCardPress()}
-                            >
-                                <Text className="text-md text-center">Bad</Text>
-                            </TouchableOpacity>
-                        </View> */}
+                                <TouchableOpacity
+                                    activeOpacity={0.6}
+                                    className="h-fit w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
+                                    onPress={() => handleCardPress()}
+                                >
+                                    <Text className="text-md text-center">Good</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    activeOpacity={0.6}
+                                    className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
+                                    onPress={() => handleCardPress()}
+                                >
+                                    <Text className="text-md text-center">Bad</Text>
+                                </TouchableOpacity>
+                            </View> */}
 					</View>
 				</View>
 				<View className="border-t border-slate-300 px-8 py-4  w-full flex-grow">
@@ -190,6 +194,4 @@ const ReviewForm = ({ drink, order }: ReviewFormProps) => {
 			</View>
 		</View>
 	);
-};
-
-export default ReviewForm;
+}

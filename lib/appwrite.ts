@@ -291,3 +291,17 @@ export async function createOrder(newOrder: CreateOrderParams) {
 		return null;
 	}
 }
+
+export async function getOrderById({ id }: { id: string }) {
+	try {
+		const result = await databases.getDocument(
+			config.databaseId!,
+			'681c30eb001f8647d5ff',
+			id
+		);
+		return result;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
