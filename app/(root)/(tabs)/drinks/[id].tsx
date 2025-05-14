@@ -35,7 +35,7 @@ export default function Order() {
 	return (
 		<View className="relative flex-1">
 			{drink && (
-				<View className="mx-auto mt-12">
+				<View className="mx-auto mt-12 flex items-center">
 					<Image
 						source={{
 							uri: 'https://image.fantuan.ca/image/goods/1897178098248527872_cover@375x250@fantuan.api@@@webp.jpg',
@@ -45,7 +45,7 @@ export default function Order() {
 							height: 200,
 						}}
 						resizeMode="cover"
-						className="rounded-full"
+						className="rounded-full justify-center"
 					/>
 					<Text className="mt-4 text-2xl text-center font-semibold">
 						{drink.name}

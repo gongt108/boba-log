@@ -24,7 +24,14 @@ export default function Review() {
 			<View className="overflow-scroll flex-1">
 				<View className="mx-auto mt-20 ">
 					<Image
-						source={images.heyteaMoyunCoconutBlue}
+						source={{
+							uri: `'https://image.fantuan.ca/image/goods/1897178098248527872_cover@375x250@fantuan.api@@@webp.jpg'`,
+						}}
+						style={{
+							width: 200,
+							height: 200,
+						}}
+						resizeMode="cover"
 						className="rounded-full"
 					/>
 					<Text className="mt-4 text-2xl text-center font-semibold">
