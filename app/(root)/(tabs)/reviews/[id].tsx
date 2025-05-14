@@ -20,6 +20,13 @@ import {
 } from '@/lib/appwrite';
 
 import images from '@/constants/images';
+import {
+	iceLevels,
+	milkChoices,
+	sizeOptions,
+	sweetLevels,
+	toppingOptions,
+} from '@/constants/customizations';
 
 export default function Review() {
 	const [searchQuery, setSearchQuery] = useState('');
@@ -38,6 +45,11 @@ export default function Review() {
 	});
 
 	console.log(order);
+
+	const getCustomizationLabel = (list, value) => {
+		const label = list.find((item) => item.value === value)?.label;
+		return label;
+	};
 
 	if (loading) {
 		return <ActivityIndicator className="text-primary-300" size="large" />;
@@ -71,7 +83,9 @@ export default function Review() {
 							<Text className="text-xl font-semibold">
 								What would you change?
 							</Text>
-							<Text className="text-lg mt-2">Size: Default</Text>
+							<Text className="text-lg mt-2">
+								Size: {getCustomizationLabel(sweetLevels, 'default')}
+							</Text>
 							<View className="flex-row space-x-2 items-center mt-2">
 								<TouchableOpacity
 									activeOpacity={0.6}
@@ -214,7 +228,7 @@ export default function Review() {
 				)}
 
 				<TouchableOpacity
-					// onPress={() => saveOrder()}
+					// onPress={() => saveReview()}
 					className="py-2 px-4 mb-12 mt-8 border rounded-2xl bg-gray-700"
 				>
 					<Text className="font-bold text-xl text-gray-200">Save Review</Text>
