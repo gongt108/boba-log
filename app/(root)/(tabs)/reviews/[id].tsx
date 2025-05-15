@@ -30,16 +30,7 @@ import {
 
 export default function Review() {
 	const [searchQuery, setSearchQuery] = useState('');
-	const [otherInfo, setOtherInfo] = useState('');
-
-	const sizeReview = ['Perfect', 'Too Big', 'Too Small'];
-	const iceReview = ['Perfect', 'Too Much', 'Too Little'];
-	const sweetnessReview = ['Perfect', 'Too Sweet', 'Not Sweet'];
-
-	const handleCardPress = () => router.push(`/find`);
 	const { id } = useLocalSearchParams<{ id?: string }>();
-
-	console.log(id);
 
 	const { data: order, loading } = useAppwrite({
 		fn: getOrderById,
@@ -48,7 +39,23 @@ export default function Review() {
 		},
 	});
 
+	const [otherInfo, setOtherInfo] = useState(order?.other);
+
+	const [reviewData, setReviewData] = useState({
+		size: order?.review?.size,
+		sweetness: order?.review?.sweetness,
+		ice: order?.review?.ice,
+		repeat: order?.review?.repeat,
+	});
+
+	const sizeReview = ['Perfect', 'Too Big', 'Too Small'];
+	const iceReview = ['Perfect', 'Too Much', 'Too Little'];
+	const sweetnessReview = ['Perfect', 'Too Sweet', 'Not Sweet'];
+
+	const handleCardPress = () => router.push(`/find`);
+
 	console.log(order);
+	console.log(typeof order.review.size);
 
 	const getCustomizationLabel = (list, value) => {
 		const label = list.find((item) => item.value === value)?.label;
@@ -65,7 +72,7 @@ export default function Review() {
 				<View className="mx-auto mt-20 flex items-center">
 					<Image
 						source={{
-							uri: `${order.drink.image}`,
+							uri: `${order?.drink?.image}`,
 						}}
 						style={{
 							width: 150,
@@ -75,10 +82,10 @@ export default function Review() {
 						className="rounded-full"
 					/>
 					<Text className="mt-4 text-2xl text-center font-semibold">
-						{order.drink.name}
+						{order?.drink.name}
 					</Text>
 					<Text className="text-center text-lg">
-						{order.drink.stores[0].name}
+						{order?.drink.stores[0].name}
 					</Text>
 				</View>
 				<ScrollView>
@@ -94,11 +101,23 @@ export default function Review() {
 								{sizeReview.map((option, k) => (
 									<TouchableOpacity
 										activeOpacity={0.6}
-										className="h-fit w-[30%] border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
+										className={`h-fit w-[30%] border-b border-slate-200 ${
+											order.review.size == k.toString()
+												? 'bg-slate-800'
+												: 'bg-slate-200'
+										} rounded-full px-4 py-2`}
 										onPress={() => console.log(option)}
 										key={k}
 									>
-										<Text className="text-md text-center">{option}</Text>
+										<Text
+											className={`text-md text-center ${
+												order.review.size == k.toString()
+													? 'text-white font-bold'
+													: ''
+											}`}
+										>
+											{option}
+										</Text>
 									</TouchableOpacity>
 								))}
 							</View>
@@ -107,24 +126,50 @@ export default function Review() {
 								{iceReview.map((option, k) => (
 									<TouchableOpacity
 										activeOpacity={0.6}
-										className="h-fit w-[30%] border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
+										className={`h-fit w-[30%] border-b border-slate-200 ${
+											order.review.ice == k.toString()
+												? 'bg-slate-800'
+												: 'bg-slate-200'
+										} rounded-full px-4 py-2`}
 										onPress={() => console.log(option)}
 										key={k}
 									>
-										<Text className="text-md text-center">{option}</Text>
+										<Text
+											className={`text-md text-center ${
+												order.review.ice == k.toString()
+													? 'text-white font-bold'
+													: ''
+											}`}
+										>
+											{option}
+										</Text>
 									</TouchableOpacity>
 								))}
 							</View>
-							<Text className="text-lg mt-2">Sugar: Default</Text>
+							<Text className="text-lg mt-2">
+								Sugar: {getCustomizationLabel(sweetLevels, 'default')}
+							</Text>
 							<View className="flex-row justify-between items-center mt-2">
 								{sweetnessReview.map((option, k) => (
 									<TouchableOpacity
 										activeOpacity={0.6}
-										className="h-fit w-[30%] border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
+										className={`h-fit w-[30%] border-b border-slate-200 ${
+											order.review.sweetness == k.toString()
+												? 'bg-slate-800'
+												: 'bg-slate-200'
+										} rounded-full px-4 py-2`}
 										onPress={() => console.log(option)}
 										key={k}
 									>
-										<Text className="text-md text-center">{option}</Text>
+										<Text
+											className={`text-md text-center ${
+												order.review.sweetness == k.toString()
+													? 'text-white font-bold'
+													: ''
+											}`}
+										>
+											{option}
+										</Text>
 									</TouchableOpacity>
 								))}
 							</View>
@@ -180,7 +225,7 @@ export default function Review() {
 				</ScrollView>
 			</View>
 			<View className="flex flex-row mx-auto space-x-4">
-				{order.review ? (
+				{order?.review ? (
 					<TouchableOpacity
 						onPress={() => router.back()}
 						className="py-2 px-4 mb-12 mt-8 border rounded-2xl bg-gray-200"
