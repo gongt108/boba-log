@@ -32,6 +32,10 @@ export default function Review() {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [otherInfo, setOtherInfo] = useState('');
 
+	const sizeReview = ['Perfect', 'Too Big', 'Too Small'];
+	const iceReview = ['Perfect', 'Too Much', 'Too Little'];
+	const sweetnessReview = ['Perfect', 'Too Sweet', 'Not Sweet'];
+
 	const handleCardPress = () => router.push(`/find`);
 	const { id } = useLocalSearchParams<{ id?: string }>();
 
@@ -86,78 +90,43 @@ export default function Review() {
 							<Text className="text-lg mt-2">
 								Size: {getCustomizationLabel(sweetLevels, 'default')}
 							</Text>
-							<View className="flex-row space-x-2 items-center mt-2">
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="h-fit w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md text-center">Perfect</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md text-center">Too Big</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md text-center">Too Small</Text>
-								</TouchableOpacity>
+							<View className="flex-row justify-between items-center mt-2">
+								{sizeReview.map((option, k) => (
+									<TouchableOpacity
+										activeOpacity={0.6}
+										className="h-fit w-[30%] border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
+										onPress={() => console.log(option)}
+										key={k}
+									>
+										<Text className="text-md text-center">{option}</Text>
+									</TouchableOpacity>
+								))}
 							</View>
 							<Text className="text-lg mt-2">Ice: Default</Text>
-							<View className="flex-row space-x-2 mt-2">
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md items-center text-center">
-										Perfect
-									</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md text-center">More Ice</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md text-center">Less Ice</Text>
-								</TouchableOpacity>
+							<View className="flex-row justify-between items-center mt-2">
+								{iceReview.map((option, k) => (
+									<TouchableOpacity
+										activeOpacity={0.6}
+										className="h-fit w-[30%] border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
+										onPress={() => console.log(option)}
+										key={k}
+									>
+										<Text className="text-md text-center">{option}</Text>
+									</TouchableOpacity>
+								))}
 							</View>
 							<Text className="text-lg mt-2">Sugar: Default</Text>
-							<View className="flex-row space-x-2 items-center mt-2">
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="h-fit w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md text-center">Perfect</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md text-center">Too Sweet</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									activeOpacity={0.6}
-									className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-									onPress={() => handleCardPress()}
-								>
-									<Text className="text-md text-center">Not Sweet</Text>
-								</TouchableOpacity>
+							<View className="flex-row justify-between items-center mt-2">
+								{sweetnessReview.map((option, k) => (
+									<TouchableOpacity
+										activeOpacity={0.6}
+										className="h-fit w-[30%] border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
+										onPress={() => console.log(option)}
+										key={k}
+									>
+										<Text className="text-md text-center">{option}</Text>
+									</TouchableOpacity>
+								))}
 							</View>
 							<Text className="text-lg mt-2">Toppings: Grass Jelly</Text>
 							{/* <View className="flex-row justify-between items-center mx-4 mt-2">
