@@ -7,21 +7,21 @@ export const sizeOptions: { label: string; value: Size }[] = [
 ];
 export const sweetLevels: { label: string; value: Sweetness }[] = [
 	{ label: 'Default', value: 'default' },
-	{ label: 'No Sugar', value: 'no sugar' },
-	{ label: 'Little Sugar', value: 'little sugar' },
-	{ label: 'Half Sugar', value: 'half sugar' },
-	{ label: 'Less Sugar', value: 'less sugar' },
-	{ label: 'Full Sugar', value: 'full sugar' },
-	{ label: 'Extra Sugar', value: 'extra sugar' },
+	{ label: 'No Sugar', value: 'none' },
+	{ label: 'Little Sugar', value: 'little' },
+	{ label: 'Half Sugar', value: 'half' },
+	{ label: 'Less Sugar', value: 'less' },
+	{ label: 'Full Sugar', value: 'full' },
+	{ label: 'Extra Sugar', value: 'extra' },
 ];
 export const iceLevels: { label: string; value: Ice }[] = [
 	{ label: 'Default', value: 'default' },
 	{ label: 'Hot', value: 'hot' },
 	{ label: 'No Ice', value: 'none' },
-	{ label: 'Little Ice', value: 'little ice' },
-	{ label: 'Half Ice', value: 'half ice' },
-	{ label: 'Less Ice', value: 'less ice' },
-	{ label: 'Full Ice', value: 'full ice' },
+	{ label: 'Little Ice', value: 'little' },
+	{ label: 'Half Ice', value: 'half' },
+	{ label: 'Less Ice', value: 'less' },
+	{ label: 'Full Ice', value: 'full' },
 ];
 export const milkChoices: { label: string; value: Milk }[] = [
 	{ label: 'Default', value: 'default' },

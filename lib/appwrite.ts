@@ -173,21 +173,21 @@ export type Size = 'default' | 'regular' | 'large';
 
 export type Sweetness =
 	| 'default'
-	| 'no sugar'
-	| 'little sugar'
-	| 'half sugar'
-	| 'less sugar'
-	| 'full sugar'
-	| 'extra sugar';
+	| 'none'
+	| 'little'
+	| 'half'
+	| 'less'
+	| 'full'
+	| 'extra';
 
 export type Ice =
 	| 'default'
 	| 'none'
-	| 'little ice'
-	| 'half ice'
-	| 'less ice'
-	| 'full ice'
-	| 'extra ice'
+	| 'little'
+	| 'half'
+	| 'less'
+	| 'full'
+	| 'extra'
 	| 'hot';
 
 export type Milk =
@@ -224,7 +224,7 @@ export type CreateOrderParams = {
 	milk?: Milk;
 	other?: string;
 	toppings?: Toppings[];
-	topping?: [];
+	topping?: string;
 	reviews?: [];
 };
 

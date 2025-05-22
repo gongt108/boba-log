@@ -37,7 +37,7 @@ export default function Find() {
 		},
 		skip: true,
 	});
-	console.log(stores);
+	
 
 	useEffect(() => {
 		refetch({
@@ -73,6 +73,7 @@ export default function Find() {
 
 			{loading ? (
 				<ActivityIndicator size="large" className="text-primary-300" />
+				
 			) : !filteredStores || filteredStores.length === 0 ? (
 				<Text>No Results</Text>
 			) : (
