@@ -37,8 +37,14 @@ export default function Review() {
 		ice: '',
 		other: '',
 	});
+	const [reviewData, setReviewData] = useState({
+		size: '0',
+		sweetness: '0',
+		ice: '0',
+		repeat: null,
+	});
 
-	console.log(id);
+	// console.log(id);
 
 	const { data: order, loading } = useAppwrite({
 		fn: getOrderById,
@@ -66,8 +72,6 @@ export default function Review() {
 
 	const handleCardPress = () => router.push(`/find`);
 
-	console.log(order?.ice);
-
 	const getCustomizationLabel = (list, value) => {
 		const label = list.find((item) => item.value === value)?.label;
 		return label;
@@ -94,7 +98,7 @@ export default function Review() {
 		}));
 	};
 
-	console.log(orderData);
+	console.log(reviewData);
 
 	if (loading) {
 		return <ActivityIndicator className="text-primary-300" size="large" />;
@@ -136,7 +140,7 @@ export default function Review() {
 									<TouchableOpacity
 										activeOpacity={0.6}
 										className={`h-fit w-[30%] border-b border-slate-200 ${
-											orderData.size == k.toString()
+											reviewData.size == k.toString()
 												? 'bg-slate-800'
 												: 'bg-slate-200'
 										} rounded-full px-4 py-2`}
@@ -145,7 +149,7 @@ export default function Review() {
 									>
 										<Text
 											className={`text-md text-center ${
-												orderData.size == k.toString()
+												reviewData.size == k.toString()
 													? 'text-white font-bold'
 													: ''
 											}`}
@@ -161,7 +165,7 @@ export default function Review() {
 									<TouchableOpacity
 										activeOpacity={0.6}
 										className={`h-fit w-[30%] border-b border-slate-200 ${
-											orderData.ice == k.toString()
+											reviewData.ice == k.toString()
 												? 'bg-slate-800'
 												: 'bg-slate-200'
 										} rounded-full px-4 py-2`}
@@ -170,7 +174,7 @@ export default function Review() {
 									>
 										<Text
 											className={`text-md text-center ${
-												orderData.ice == k.toString()
+												reviewData.ice == k.toString()
 													? 'text-white font-bold'
 													: ''
 											}`}
@@ -188,7 +192,7 @@ export default function Review() {
 									<TouchableOpacity
 										activeOpacity={0.6}
 										className={`h-fit w-[30%] border-b border-slate-200 ${
-											orderData.sweetness == k.toString()
+											reviewData.sweetness == k.toString()
 												? 'bg-slate-800'
 												: 'bg-slate-200'
 										} rounded-full px-4 py-2`}
@@ -197,7 +201,7 @@ export default function Review() {
 									>
 										<Text
 											className={`text-md text-center ${
-												orderData.sweetness == k.toString()
+												reviewData.sweetness == k.toString()
 													? 'text-white font-bold'
 													: ''
 											}`}
