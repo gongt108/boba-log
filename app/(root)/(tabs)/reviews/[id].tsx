@@ -37,7 +37,12 @@ export default function Review() {
 		ice: '',
 		other: '',
 	});
-	const [reviewData, setReviewData] = useState({
+	const [reviewData, setReviewData] = useState<{
+		size: string;
+		sweetness: string;
+		ice: string;
+		repeat: boolean | null;
+	}>({
 		size: '0',
 		sweetness: '0',
 		ice: '0',
@@ -251,17 +256,37 @@ export default function Review() {
 						<View className="flex-row justify-between items-center mx-4 mt-2">
 							<TouchableOpacity
 								activeOpacity={0.6}
-								className="h-fit w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-								onPress={() => handleCardPress()}
+								className={`h-fit w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2 ${
+									reviewData.repeat == true ? 'bg-slate-800' : 'bg-slate-200'
+								}`}
+								onPress={() =>
+									setReviewData((prev) => ({ ...prev, repeat: true }))
+								}
 							>
-								<Text className="text-md text-center">Yes</Text>
+								<Text
+									className={`text-md text-center ${
+										reviewData.repeat == true ? 'text-white font-bold' : ''
+									}`}
+								>
+									Yes
+								</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
 								activeOpacity={0.6}
-								className="w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2"
-								onPress={() => handleCardPress()}
+								className={`h-fit w-1/3 border-b border-slate-200 bg-slate-200 rounded-full px-4 py-2 ${
+									reviewData.repeat == false ? 'bg-slate-800' : 'bg-slate-200'
+								}`}
+								onPress={() =>
+									setReviewData((prev) => ({ ...prev, repeat: false }))
+								}
 							>
-								<Text className="text-md text-center">No</Text>
+								<Text
+									className={`text-md text-center ${
+										reviewData.repeat == false ? 'text-white font-bold' : ''
+									}`}
+								>
+									No
+								</Text>
 							</TouchableOpacity>
 						</View>
 					</View>
