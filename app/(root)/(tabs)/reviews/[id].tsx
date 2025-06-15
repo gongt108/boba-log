@@ -31,6 +31,12 @@ import {
 export default function Review() {
 	const [searchQuery, setSearchQuery] = useState('');
 	const { id } = useLocalSearchParams<{ id?: string }>();
+	const [orderData, setOrderData] = useState({
+		size: '',
+		sweetness: '',
+		ice: '',
+		other: '',
+	});
 
 	console.log(id);
 
@@ -41,14 +47,18 @@ export default function Review() {
 		},
 	});
 
-	const [otherInfo, setOtherInfo] = useState(order?.other);
+	useEffect(() => {
+		if (!loading && order) {
+			setOrderData({
+				size: order?.size,
+				sweetness: order?.sweetness,
+				ice: order?.ice,
+				other: order?.other,
+			});
+		}
+	}, [loading, order]);
 
-	const [reviewData, setReviewData] = useState({
-		size: order?.review?.size,
-		sweetness: order?.review?.sweetness,
-		ice: order?.review?.ice,
-		repeat: order?.review?.repeat,
-	});
+	// const [otherInfo, setOtherInfo] = useState();
 
 	const sizeReview = ['Perfect', 'Too Big', 'Too Small'];
 	const iceReview = ['Perfect', 'Too Much', 'Too Little'];
@@ -56,7 +66,7 @@ export default function Review() {
 
 	const handleCardPress = () => router.push(`/find`);
 
-	console.log(order);
+	console.log(order?.ice);
 
 	const getCustomizationLabel = (list, value) => {
 		const label = list.find((item) => item.value === value)?.label;
@@ -84,7 +94,7 @@ export default function Review() {
 		}));
 	};
 
-	console.log(reviewData);
+	console.log(orderData);
 
 	if (loading) {
 		return <ActivityIndicator className="text-primary-300" size="large" />;
@@ -126,7 +136,7 @@ export default function Review() {
 									<TouchableOpacity
 										activeOpacity={0.6}
 										className={`h-fit w-[30%] border-b border-slate-200 ${
-											reviewData.size == k.toString()
+											orderData.size == k.toString()
 												? 'bg-slate-800'
 												: 'bg-slate-200'
 										} rounded-full px-4 py-2`}
@@ -135,7 +145,7 @@ export default function Review() {
 									>
 										<Text
 											className={`text-md text-center ${
-												reviewData.size == k.toString()
+												orderData.size == k.toString()
 													? 'text-white font-bold'
 													: ''
 											}`}
@@ -151,7 +161,7 @@ export default function Review() {
 									<TouchableOpacity
 										activeOpacity={0.6}
 										className={`h-fit w-[30%] border-b border-slate-200 ${
-											reviewData.ice == k.toString()
+											orderData.ice == k.toString()
 												? 'bg-slate-800'
 												: 'bg-slate-200'
 										} rounded-full px-4 py-2`}
@@ -160,7 +170,7 @@ export default function Review() {
 									>
 										<Text
 											className={`text-md text-center ${
-												reviewData.ice == k.toString()
+												orderData.ice == k.toString()
 													? 'text-white font-bold'
 													: ''
 											}`}
@@ -178,7 +188,7 @@ export default function Review() {
 									<TouchableOpacity
 										activeOpacity={0.6}
 										className={`h-fit w-[30%] border-b border-slate-200 ${
-											reviewData.sweetness == k.toString()
+											orderData.sweetness == k.toString()
 												? 'bg-slate-800'
 												: 'bg-slate-200'
 										} rounded-full px-4 py-2`}
@@ -187,7 +197,7 @@ export default function Review() {
 									>
 										<Text
 											className={`text-md text-center ${
-												reviewData.sweetness == k.toString()
+												orderData.sweetness == k.toString()
 													? 'text-white font-bold'
 													: ''
 											}`}
@@ -227,8 +237,10 @@ export default function Review() {
 								placeholderTextColor="#949494"
 								numberOfLines={4}
 								multiline={true}
-								onChangeText={setOtherInfo}
-								value={otherInfo}
+								onChangeText={(text) =>
+									setOrderData((prev) => ({ ...prev, other: text }))
+								}
+								value={orderData.other}
 							/>
 						</View>
 						<Text className="text-lg mt-2">Would you get again?</Text>

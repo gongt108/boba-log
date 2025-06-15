@@ -78,29 +78,29 @@ const OrderForm = ({ drink }: OrderFormProps) => {
 		fn: getOrders,
 	});
 
-	// const saveOrder = async () => {
-	// 	const order = await createOrder({
-	// 		drink: formData.drink,
-	// 		size: formData.size,
-	// 		ice: formData.ice,
-	// 		sweetness: formData.sweetness,
-	// 		milk: formData.milk,
-	// 		topping: otherToppings,
-	// 		toppings: formData.toppings,
-	// 	});
+	const saveOrder = async () => {
+		const order = await createOrder({
+			drink: formData.drink,
+			size: formData.size,
+			ice: formData.ice,
+			sweetness: formData.sweetness,
+			milk: formData.milk,
+			topping: otherToppings,
+			toppings: formData.toppings,
+			other: otherInfo,
+		});
 
-	// 	if (order) {
-	// 		router.push(`/reviews/${order.$id}`);
-	// 	}
-	// };
-
-	const saveOrder = () => {
-		router.push(`/reviews/682eb270002b4f627789`);
+		if (order) {
+			router.push(`/reviews/${order.$id}`);
+		}
 	};
+
+	// const saveOrder = () => {
+	// 	router.push(`/reviews/682eb270002b4f627789`);
+	// };
 
 	return (
 		<View className="mt-4">
-			{orders && <Text>Exists</Text>}
 			<View className=" px-8 pt-4 mb-4">
 				<Text className="font-semibold text-xl">Size</Text>
 				<Text className="text-lg mb-2">Choose 1</Text>

@@ -35,26 +35,30 @@ const PastReview = () => {
 				</TouchableOpacity>
 				{seeThat && (
 					<View className="flex flex-row flex-wrap mt-2">
-						<View className="w-1/3 p-2">Category</View>
-						<View className="w-1/3 border-x border-gray-300 p-2">
-							Customizations
+						<View className="w-1/3 p-2">
+							<Text>Category</Text>
 						</View>
-						<View className="w-1/3 p-2">Review</View>
+						<View className="w-1/3 border-x border-gray-300 p-2">
+							<Text>Customizations</Text>
+						</View>
+						<View className="w-1/3 p-2">
+							<Text>Review</Text>
+						</View>
 						<View className="w-1/3 border-t border-gray-300 bg-gray-200 p-2">
 							Size
 						</View>
 						<View className="w-1/3 border border-b-0 border-gray-300 bg-gray-200 p-2">
-							Default
+							<Text>Default</Text>
 						</View>
 						<View className="w-1/3 border-t border-gray-300 bg-gray-200 p-2"></View>
 						<View className="w-1/3 border-t border-gray-300 p-2">
-							Sweetness
+							<Text>Sweetness</Text>
 						</View>
 						<View className="w-1/3 border border-b-0 border-gray-300 p-2">
 							Half Sweet
 						</View>
 						<View className="w-1/3 border-t border-gray-300 p-2">
-							Too Sweet
+							<Text>Too Sweet</Text>
 						</View>
 					</View>
 				)}
